@@ -1,0 +1,30 @@
+#render-target {
+  text-align: center;
+}
+
+.intersection {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+.intersection-empty:hover {
+  cursor: pointer;
+}
+
+.stone-mixin {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.stone-black {
+  .stone-mixin;
+  background-color: black;
+}
+
+.stone-white {
+  .stone-mixin;
+  background-color: white;
+}
