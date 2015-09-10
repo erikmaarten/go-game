@@ -8,25 +8,21 @@ Game.newBoard = function() {
   return board;
 }
 
-Game.update = function(position, color) {
-  var currGame = Games.findOne({status: "active"});
-  var currentGameId = currGame._id;
-  var currBoard = currGame.board;
-
+Game.update = function(position) {
+  console.log("position in Game.update: " + position.length);
   var positionInString = position[0] * 19 + position[1];
-  var stone = Game.stoneColorToType(color);
-
-  var newBoard = currBoard.slice(0, positionInString) + stone + currBoard.slice(positionInString + 1);
-
-  Games.update({_id: currentGameId}, {$set: {board: newBoard}});
+  Meteor.call("insertStone", positionInString, function(error, result) {
+    if (error) {console.log("error in insertStone: " + error);}
+  });
 }
 
 
 Game.stoneColorToType = function(color) {
+  check(color, String);
   if (color === "black") {
     return 1;
   } else if (color === "white") {
-    return -1;
+    return 2;
   } else {
     throw new Meteor.Error("Invalid argument");
   }

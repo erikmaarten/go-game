@@ -26,6 +26,8 @@ App = React.createClass({
       Meteor.call("createNewGame", function(error, result) {
         if (error) {console.log("error in createNewGame: " + error);}
       });
+    } else {
+      alert("Log in first!");
     }
   },
 
@@ -35,6 +37,19 @@ App = React.createClass({
       Meteor.call("deleteGame", function(error, result) {
         if (error) {console.log("error in deleteGame: " + error);}
       });
+    } else {
+      alert("Log in first!");
+    }
+  },
+
+  handleJoinGame(event) {
+    event.preventDefault();
+    if (Meteor.userId()) {
+      Meteor.call("joinGame", function(error, result) {
+        if (error) {console.log("error in joinGame: " + error);}
+      });
+    } else {
+      alert("Log in first!");
     }
   },
  
@@ -63,6 +78,7 @@ App = React.createClass({
 
         <button type="button" onClick={this.handleClickNewGame}>New game</button>
         <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
+        <button type="button" onClick={this.handleJoinGame}>Join game</button>
         <Board data={this.data.activeGame.board} />
  
       </div>

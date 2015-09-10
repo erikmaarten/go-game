@@ -8,7 +8,7 @@ Intersection = React.createClass({
   handleClick() {
     var pos = this.props.position;
     console.log(pos);
-    Game.update(pos, "black");
+    Game.update(pos);
   },
 
   render() {
@@ -19,7 +19,7 @@ Intersection = React.createClass({
           <Stone color="black" />
         </span>
       );
-    } else if (this.props.type == -1) {
+    } else if (this.props.type == 2) {
       // is white stone
       return (
         <span className="intersection intersection-filled">
