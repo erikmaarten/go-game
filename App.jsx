@@ -22,12 +22,20 @@ App = React.createClass({
 
   handleClickNewGame(event) {
     event.preventDefault();
-    let board = Game.new();
-    Games.insert({
-      board: board, 
-      status: "active",
-      createdAt: new Date()
-    });
+    if (Meteor.userId()) {
+      Meteor.call("createNewGame", function(error, result) {
+        if (error) {console.log("error in createNewGame: " + error);}
+      });
+    }
+  },
+
+  handleClickDeleteGame(event) {
+    event.preventDefault();
+    if (Meteor.userId()) {
+      Meteor.call("deleteGame", function(error, result) {
+        if (error) {console.log("error in deleteGame: " + error);}
+      });
+    }
   },
  
   render() {
@@ -39,7 +47,7 @@ App = React.createClass({
       return (
         <div className="container">
           <header>
-            <h1>Todo List</h1>
+            <h1>Go</h1>
           </header>
 
           <button type="button" onClick={this.handleClickNewGame}>New game</button>
@@ -50,10 +58,11 @@ App = React.createClass({
     return (
       <div className="container">
         <header>
-          <h1>Todo List</h1>
+          <h1>Go</h1>
         </header>
 
         <button type="button" onClick={this.handleClickNewGame}>New game</button>
+        <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
         <Board data={this.data.activeGame.board} />
  
       </div>

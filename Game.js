@@ -1,6 +1,6 @@
 Game = {};
 
-Game.new = function() {
+Game.newBoard = function() {
   var board = "";
   for (var i = 0; i < 19*19; i++) {
     board += "0";
