@@ -5,6 +5,7 @@ Game.matrixPosToLinearPos = function(position) {
 }
 
 Game.linearPosToMatrixPos = function(pos) {
+  check(pos, Number);
   return [Math.floor(pos / BOARD_WIDTH), pos % BOARD_WIDTH];
 }
 Game.newBoard = function() {
@@ -22,9 +23,57 @@ Game.update = function(position) {
   });
 }
 
+Game.capture = function(board, playedPosition) {
+  check(board, String);
+  check(playedPosition, [Number]);
+  // Perform capture (done after a stone has been played)
+  // Note that suicide is not prohibited according to most rulesets
+  // However, the capture function does ensure validity. Instead,
+  // Game.validatePlay() does validation
+
+  // 1. Fetch all adjacent positions to the playedPosition
+  // 2. For all stones in those positions, check if any have
+  // zero liberties. If so, remove the whole group that those 
+  // stones belong to
+
+  var stringPos = Game.matrixPosToLinearPos(playedPosition);
+  var adjacent = Game.getAdjacentPositions(stringPos);
+
+  //console.log("adjacent positions: " + JSON.stringify(adjacent));
+
+  var capturedPositions = _.chain(adjacent)
+    .filter(function(position) {
+      // return only non-empty intersections
+      return board[position] !== "0";
+    })
+    .filter(function(position) {
+      // return only positions where stones have zero liberties
+      var matrixPos = Game.linearPosToMatrixPos(position);
+      return Game.numberOfLiberties(board, matrixPos) === 0;
+    })
+    .map(function(position) {
+      // return the groups that the positions belong to
+      var matrixPos = Game.linearPosToMatrixPos(position);
+      //console.log("Game.getGroup: " + JSON.stringify(Game.getGroup(board, matrixPos)));
+      return Game.getGroup(board, matrixPos);
+    })
+    .flatten()
+    .uniq()
+    .value();
+
+  var cleanedBoard = board;
+  _.each(capturedPositions, function(position) {
+    cleanedBoard = cleanedBoard.slice(0, position) + "0" + cleanedBoard.slice(position + 1);
+  });
+  return cleanedBoard;
+}
+
 // Return a list of intersections of same type connected to
 // fromPosition
 Game.getGroup = function(board, fromMatrixPosition) {
+  check(board, String);
+  check(fromMatrixPosition, [Number]);
+
   var positionInString = Game.matrixPosToLinearPos(fromMatrixPosition);
   var inGroup = [];
   var checked = [];
@@ -48,24 +97,10 @@ Game.getGroup = function(board, fromMatrixPosition) {
       continue;
     }
 
-    _.chain([ 1, -1, BOARD_WIDTH, - BOARD_WIDTH ])
-      .filter(function (step) {
-        // filter out steps that are illegal
-        // such as 19 - 1 or 18 + 1
-        return !((currentPosition % 19 === 0 && step === -1) || 
-          (currentPosition % 18 === 0 && step === 1));
-
-      })
-      .map(function(step) {
-        // map to currentPosition's adjacent positions
-        return currentPosition + step;
-      })
-      .filter(function(rawPos) {
-        // filter out positions that are outside the board
-        // The largest string index that represents a board position
-        // is BOARD_WIDTH * BOARD_WIDTH - 1
-        return !(rawPos < 0 || rawPos > BOARD_WIDTH * BOARD_WIDTH - 1);
-      })
+    // Get all adjacent positions. If they are already checked,
+    // filter out. If not checked, and if not in the list toCheck,
+    // add to toCheck so that a future iteration will check that position.
+    _.chain(Game.getAdjacentPositions(currentPosition))
       .filter(function(rawPos) {
         // filter out the positions that have already been checked
         return (checked.indexOf(rawPos) === -1);
@@ -79,6 +114,7 @@ Game.getGroup = function(board, fromMatrixPosition) {
 
 Game.numberOfLiberties = function(board, position) {
   check(board, String);
+  check(position, [Number]);
   // 1. Get the positions belonging to a group
   // 2. For all the positions, check adjacent positions
   // for liberties
@@ -115,7 +151,7 @@ Game.getAdjacentPositions = function(stringPos) {
         // filter out steps that cross horizontal board boundaries
         // such as 19 - 1 or 18 + 1
         return !((stringPos % 19 === 0 && step === -1) || 
-          (stringPos % 18 === 0 && step === 1));
+          ( (stringPos + 1) % 19 === 0 && step === 1));
 
       })
       .map(function(step) {
