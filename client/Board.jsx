@@ -1,8 +1,8 @@
 Board = React.createClass({
   propTypes: {
-    // This component gets the task to display through a React prop.
     // We can use propTypes to indicate it is required
-    data: React.PropTypes.string.isRequired
+    data: React.PropTypes.string.isRequired,
+    players: React.PropTypes.array.isRequired
   },
 
   split(a, n) {
@@ -22,7 +22,8 @@ Board = React.createClass({
   render() {
     var board_rows = this.split(this.props.data, 19);
     var rows = board_rows.map((row, index) => {
-      return <BoardRow data={row} rowIndex={index}/>;
+      return <BoardRow data={row} board={this.props.data} 
+        rowIndex={index} players={this.props.players} />;
     });
     /*
     var rows = _.each(board_rows, function(element, index) {
@@ -37,13 +38,15 @@ Board = React.createClass({
 BoardRow = React.createClass({
   propTypes: {
     data: React.PropTypes.string.isRequired,
-    rowIndex: React.PropTypes.number.isRequired
+    board: React.PropTypes.string.isRequired,
+    rowIndex: React.PropTypes.number.isRequired,
+    players: React.PropTypes.array.isRequired
   },
 
   render() {
     var raw_intersections = this.props.data.split("");
     var intersections = raw_intersections.map((type, index) => {
-      return <Intersection type={type} position={[this.props.rowIndex, index]} />;
+      return <Intersection players={this.props.players} type={type} board={this.props.board} position={[this.props.rowIndex, index]} />;
     });
     return (
       <div className="board-row">{intersections}</div>

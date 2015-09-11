@@ -79,7 +79,7 @@ App = React.createClass({
         <button type="button" onClick={this.handleClickNewGame}>New game</button>
         <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
         <button type="button" onClick={this.handleJoinGame}>Join game</button>
-        <Board data={this.data.activeGame.board} />
+        <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
  
       </div>
     );
