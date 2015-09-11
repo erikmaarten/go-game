@@ -81,88 +81,59 @@ Game.getGroup = function(board, fromMatrixPosition) {
 
 }
 
-Game.numberOfLiberties = function(preBoard, position, color) {
-  check(preBoard, String);
-  check(color, String);
-  // 1. For all adjacent intersections to position,
-  // if the intersection is empty, add 1 to liberties
-  // if the intersection is of same color,
-  // return its number of (uncounted) liberties and so on
+Game.numberOfLiberties = function(board, position) {
+  check(board, String);
+  // 1. Get the positions belonging to a group
+  // 2. For all the positions, check adjacent positions
+  // for liberties
+  // 3. return all unique liberties
 
-  var initialPosition = Game.matrixPosToLinearPos(position);
-  var boardString = preBoard.slice(0, initialPosition) + Game.colorNameToStoneType[color] +
-    preBoard.slice(initialPosition + 1);
-
-  var intersectionState = Game.colorNameToStoneType[color].toString();
-  var visitedIntersections = [];
-  // initial position visited
-  visitedIntersections.push(Game.matrixPosToLinearPos(position));
-
-  console.log("Starting numberOfLiberties. intersectionState: " + intersectionState);
-  console.log("color: " + color + " stoneType: " + intersectionState);
-  console.log("boardString: " + boardString);
-
-  var recNumLiberties = function(pos, visited, intState) {
-    return _.chain([ [0,1], [0,-1], [1,0], [-1,0] ])
-      .map(function(step) {
-        // map to adjacent positions to pos
-        return [ pos[0] + step[0], pos[1] + step[1] ];
-      })
-      .filter(function(rawPos) {
-        // filter out positions that are outside the board
-        if (rawPos[0] < 0 || rawPos[0] >= BOARD_WIDTH || 
-          rawPos[1] < 0 || rawPos[1] >= BOARD_WIDTH) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .filter(function(rawPos) {
-        // filter out the positions that have already been checked
-        if (visited.indexOf(Game.matrixPosToLinearPos(rawPos)) === -1) {
-          console.log("has _not_ visited: " + Game.matrixPosToLinearPos(rawPos));
-        } else {
-          console.log("has visited: " + Game.matrixPosToLinearPos(rawPos));
-        }
-        return (visited.indexOf(Game.matrixPosToLinearPos(rawPos)) === -1);
-      })
-      .map(function(validPosition) {
-        // Now check the intersections
-        // If state is same as the comparison, call this function
-        // on that position
-        // If state is empty (== 0), add one to liberties count
-
-        // add position to visited positions
-        visited.push(Game.matrixPosToLinearPos(validPosition));
-        console.log("visitedIntersections: " + JSON.stringify(visited));
-
-        // convert position to string position
-        stringPos = Game.matrixPosToLinearPos(validPosition);
-
-        console.log("validPosition: " + validPosition);
-
-        if (boardString[stringPos] === intState) {
-          return recNumLiberties(validPosition, visited, intState);
-        } else if (boardString[stringPos] === "0") {
-          console.log("added liberty");
-          return 1;
-        } else {
-          return 0;
-        }
-      })
-      .reduce(function(memo, num) {
-        return memo + num;
-      }, 0)
-      .value();
-  }
-
-  return recNumLiberties(position, visitedIntersections, intersectionState);
+  var positionsInGroup = Game.getGroup(board, position);
+  return _.chain(positionsInGroup)
+    .map(function(position) {
+      // return all adjacent positions
+      return Game.getAdjacentPositions(position);
+    })
+    .flatten()
+    // Keep only unique positions
+    .uniq()
+    .map(function(uniqPosition) {
+      // Count only positions that are libertis, == "0"
+      return board[uniqPosition] === "0" ? 1 : 0;
+    })
+    .reduce(function(memo, num) {
+      return memo + num;
+    }, 0)
+    .value();
 }
 
 Game.colorNameToStoneType = {
   black: 1,
   white: 2
 };
+
+Game.getAdjacentPositions = function(stringPos) {
+  check(stringPos, Number);
+  return _.chain([ 1, -1, BOARD_WIDTH, - BOARD_WIDTH ])
+      .filter(function (step) {
+        // filter out steps that cross horizontal board boundaries
+        // such as 19 - 1 or 18 + 1
+        return !((stringPos % 19 === 0 && step === -1) || 
+          (stringPos % 18 === 0 && step === 1));
+
+      })
+      .map(function(step) {
+        // map to currentPosition's adjacent positions
+        return stringPos + step;
+      })
+      .filter(function(rawPos) {
+        // filter out positions that are outside the board
+        // The largest string index that represents a board position
+        // is BOARD_WIDTH * BOARD_WIDTH - 1
+        return !(rawPos < 0 || rawPos > BOARD_WIDTH * BOARD_WIDTH - 1);
+      })
+      .value();
+}
 
 Game.stoneColorToType = function(color) {
   check(color, String);
