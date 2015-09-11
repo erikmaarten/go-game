@@ -49,6 +49,13 @@ Game.getGroup = function(board, fromMatrixPosition) {
     }
 
     _.chain([ 1, -1, BOARD_WIDTH, - BOARD_WIDTH ])
+      .filter(function (step) {
+        // filter out steps that are illegal
+        // such as 19 - 1 or 18 + 1
+        return !((currentPosition % 19 === 0 && step === -1) || 
+          (currentPosition % 18 === 0 && step === 1));
+
+      })
       .map(function(step) {
         // map to currentPosition's adjacent positions
         return currentPosition + step;
@@ -67,13 +74,8 @@ Game.getGroup = function(board, fromMatrixPosition) {
         // filter out the positions that have already been checked
         return (checked.indexOf(rawPos) === -1);
       }).each(function(pos) {
-        toCheck.push(pos);
+        if (toCheck.indexOf(pos) === -1) toCheck.push(pos);
       });
-    console.log("in loop. toCheck.length: " + toCheck.length);
-    console.log("inGroup: " + JSON.stringify(inGroup));
-    console.log("checked: " + JSON.stringify(checked));
-    console.log("toCheck: " + JSON.stringify(toCheck));
-
   }
   return inGroup;
 
