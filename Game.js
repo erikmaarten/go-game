@@ -64,11 +64,7 @@ Game.getGroup = function(board, fromMatrixPosition) {
         // filter out positions that are outside the board
         // The largest string index that represents a board position
         // is BOARD_WIDTH * BOARD_WIDTH - 1
-        if (rawPos < 0 || rawPos > BOARD_WIDTH * BOARD_WIDTH - 1) {
-          return false;
-        } else {
-          return true;
-        }
+        return !(rawPos < 0 || rawPos > BOARD_WIDTH * BOARD_WIDTH - 1);
       })
       .filter(function(rawPos) {
         // filter out the positions that have already been checked
