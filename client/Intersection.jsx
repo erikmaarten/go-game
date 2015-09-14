@@ -1,7 +1,6 @@
 // Task component - represents a single todo item
 Intersection = React.createClass({
   propTypes: {
-    board: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     position: React.PropTypes.array.isRequired,
     players: React.PropTypes.array.isRequired
@@ -18,9 +17,6 @@ Intersection = React.createClass({
         return player.color;
       })
       .value()[0];
-
-    var numLiberties = Game.numberOfLiberties(this.props.board, pos, color);
-    console.log("numLiberties: " + numLiberties);
     Game.placeStone(pos);
   },
 

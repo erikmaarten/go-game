@@ -4,6 +4,10 @@ App = React.createClass({
 
   getMeteorData() {
     var handle = Meteor.subscribe("games");
+    var game = Games.findOne({status: "active"});
+    if (game && game.board) {
+      Session.set("board", Games.findOne({status: "active"}).board);
+    }
 
     return {
       loading: ! handle.ready(),
@@ -75,6 +79,8 @@ App = React.createClass({
         <header>
           <h1>Go</h1>
         </header>
+        <h2>Player turn: {this.data.activeGame.currentPlayer}</h2>
+        <GameInfo players={this.data.activeGame.players} />
 
         <button type="button" onClick={this.handleClickNewGame}>New game</button>
         <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
