@@ -16,9 +16,9 @@ Game.newBoard = function() {
   return board;
 }
 
-Game.update = function(position) {
+Game.placeStone = function(position) {
   var positionInString = this.matrixPosToLinearPos(position);
-  Meteor.call("insertStone", positionInString, function(error, result) {
+  Meteor.call("placeStone", positionInString, function(error, result) {
     if (error) {console.log("error in insertStone: " + error);}
   });
 }
