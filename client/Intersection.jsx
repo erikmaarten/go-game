@@ -21,7 +21,7 @@ Intersection = React.createClass({
 
     var numLiberties = Game.numberOfLiberties(this.props.board, pos, color);
     console.log("numLiberties: " + numLiberties);
-    Game.update(pos);
+    Game.placeStone(pos);
   },
 
   render() {
