@@ -78,7 +78,8 @@ Game.capture = function(board, playedPosition) {
   });
 
   // Self-capture
-  // Same as above, but capturing the current player's stones
+  // Same as above except that it includes the position being played
+  // but capturing the current player's stones
   // TODO: the logic could be extracted and put in a separate function
   // to be reused by both capture modes
 
