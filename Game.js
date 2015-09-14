@@ -1,5 +1,13 @@
 Game = {};
 
+Game.countNumStones = function(board, color) {
+  var stone = Game.stoneColorToCharacter(color);
+  // A bit excessive in memory usage, but fast
+  // Creates and allocates memory for each array created,
+  // resulting in at most 19 * 19 array allocs
+  return board.split(stone).length - 1;
+}
+
 Game.matrixPosToLinearPos = function(position) {
   return position[0] * BOARD_WIDTH + position[1];
 }
@@ -32,19 +40,22 @@ Game.capture = function(board, playedPosition) {
   // Game.validatePlay() does validation
 
   // 1. Fetch all adjacent positions to the playedPosition
-  // 2. For all stones in those positions, check if any have
-  // zero liberties. If so, remove the whole group that those 
+  // 2. For all of the opponent's stones in those positions, 
+  // check if any have zero liberties. If so, remove the whole group that those 
   // stones belong to
+  // 3. For all of your own stones in those positions, remove those
+  //  with zero liberties. If there are any, this move is not legal
+  //  but that concern is handled elsewhere.
 
   var stringPos = Game.matrixPosToLinearPos(playedPosition);
   var adjacent = Game.getAdjacentPositions(stringPos);
+  var playerType = board[stringPos];
 
-  //console.log("adjacent positions: " + JSON.stringify(adjacent));
-
+  // Capture opponent's stones
   var capturedPositions = _.chain(adjacent)
     .filter(function(position) {
-      // return only non-empty intersections
-      return board[position] !== "0";
+      // return only intersections that the opponent currently holds
+      return board[position] !== "0" && board[position] !== playerType;
     })
     .filter(function(position) {
       // return only positions where stones have zero liberties
@@ -65,6 +76,38 @@ Game.capture = function(board, playedPosition) {
   _.each(capturedPositions, function(position) {
     cleanedBoard = cleanedBoard.slice(0, position) + "0" + cleanedBoard.slice(position + 1);
   });
+
+  // Self-capture
+  // Same as above, but capturing the current player's stones
+  // TODO: the logic could be extracted and put in a separate function
+  // to be reused by both capture modes
+
+  // Add the played position to intersections to check for suicides
+  adjacent.push(stringPos);
+  var capturedPositions = _.chain(adjacent)
+    .filter(function(position) {
+      // return only intersections that the opponent currently holds
+      return board[position] === playerType;
+    })
+    .filter(function(position) {
+      // return only positions where stones have zero liberties
+      var matrixPos = Game.linearPosToMatrixPos(position);
+      return Game.numberOfLiberties(board, matrixPos) === 0;
+    })
+    .map(function(position) {
+      // return the groups that the positions belong to
+      var matrixPos = Game.linearPosToMatrixPos(position);
+      //console.log("Game.getGroup: " + JSON.stringify(Game.getGroup(board, matrixPos)));
+      return Game.getGroup(board, matrixPos);
+    })
+    .flatten()
+    .uniq()
+    .value();
+
+  _.each(capturedPositions, function(position) {
+    cleanedBoard = cleanedBoard.slice(0, position) + "0" + cleanedBoard.slice(position + 1);
+  });
+
   return cleanedBoard;
 }
 
@@ -173,6 +216,17 @@ Game.stoneColorToType = function(color) {
     return 1;
   } else if (color === "white") {
     return 2;
+  } else {
+    throw new Meteor.Error("Invalid argument");
+  }
+}
+
+Game.stoneColorToCharacter = function(color) {
+  check(color, String);
+  if (color === "black") {
+    return "1";
+  } else if (color === "white") {
+    return "2";
   } else {
     throw new Meteor.Error("Invalid argument");
   }
