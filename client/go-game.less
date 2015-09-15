@@ -1,3 +1,6 @@
+@intersection-width: 30px;
+@stone-width: 20px;
+
 #render-target {
   text-align: center;
 }
@@ -10,9 +13,9 @@
 .intersection {
   box-sizing: border-box;
   display: inline-block;
-  padding: 2px;
-  width: 30px;
-  height: 100%;
+  padding: (@intersection-width - @stone-width) / 2;
+  width: @intersection-width;
+  height: @intersection-width;
 }
 
 .intersection-empty:hover {
@@ -22,10 +25,11 @@
 }
 
 .stone-mixin {
+  box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
-  width: 20px;
-  height: 20px;
+  width: @stone-width;
+  height: @stone-width;
   border-radius: 50%;
   border: 1px solid black;
 }
