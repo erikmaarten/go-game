@@ -1,5 +1,54 @@
 Game = {};
 
+Game.debugPrintCurrent = function() {
+  console.log(Games.findOne({status: "active"}).board);
+}
+
+Game.getEmptyGroups = function(board) {
+  var intersections = [];
+  var emptyGroups = [];
+  for (var i = 0; i < board.length; i++) {
+    intersections.push(i);
+  };
+  while (intersections.length !== 0) {
+    var positionInString = intersections.pop();
+
+    // If the position is not empty, i.e. represents a stone,
+    // do not get its group (we're only looking for empty groups)
+    if (board[positionInString] !== "0") {
+      continue;
+    } else {
+      // Get the group that the current position belongs to
+      // then remove all intersections in that group from the intersections
+      // that still are to be checked
+      var matrixPos = Game.linearPosToMatrixPos(positionInString, Game.getBoardWidth(board));
+      var g = Game.getGroup(board, matrixPos);
+      intersections = _.difference(intersections, g);
+      emptyGroups.push(g);
+    }
+  }
+
+  return emptyGroups;
+}
+
+Game.getPlayerScore = function(board, stone) {
+  var checkStoneType = Match.Where(function(x) {
+    return x === "1" || x === "2";
+  });
+  check(stone, checkStoneType);
+  check(board, String);
+
+  // 1. Get all empty groups
+  // 2. For each empty group, check if that group has adjacent stones
+  // of only one type. If so, the group belongs to that player, then add 
+  // the group's intersection count to to score of that player
+  // 3. Count the number of stones on the board for each player, and add
+  // to their scores
+
+
+
+}
+
 Game.countNumStones = function(board, color) {
   var stone = Game.stoneColorToCharacter(color);
   // A bit excessive in memory usage, but fast

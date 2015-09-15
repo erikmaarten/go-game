@@ -74,4 +74,28 @@ describe('Go logic', function() {
       expect(adj.length).toEqual(expected.length);
     });
   });
+
+  describe('Get empty groups for the whole board', function() {
+    it('should return correct number of groups', function() {
+      var board = "001000200011000200110000222000000000000000000000000000000000000000000000000000000";
+      var emptyGroups = Game.getEmptyGroups(board);
+      expect(emptyGroups.length).toEqual(3);
+    });
+
+    it('should return groups that have appropriate member intersections', function() {
+      var board = "001000200011000200110000222000000000000000000000000000000000000000000000000000000";
+      var emptyGroups = Game.getEmptyGroups(board);
+      // sort by number of elements
+      emptyGroups.sort(function(groupA, groupB) {
+        if (groupA.length < groupB.length) return -1;
+        else if (groupA.length > groupB.length) return 1;
+        else return 0;
+      });
+      expect(emptyGroups.length).toEqual(3);
+      expect(emptyGroups[0].length).toEqual(3);
+      expect(emptyGroups[1].length).toEqual(4);
+      expect(emptyGroups[2].length).toEqual(64);
+    });
+
+  });
 });
