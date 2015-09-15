@@ -75,7 +75,7 @@ App = React.createClass({
           <AppHeader />
           <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
           <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
-          <Board data={this.data.endedGame.board} players={this.data.endedGame.players} />
+          <EndedGame game={this.data.endedGame} />
         </div>);
       } else {
         return (
