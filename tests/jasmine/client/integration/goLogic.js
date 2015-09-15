@@ -98,4 +98,26 @@ describe('Go logic', function() {
     });
 
   });
+
+  describe('Test scoring', function() {
+    it('should correctly count the territory and stones when a small corner territory is controlled', function() {
+      var board = "001000200011000200110000222000000000000000000000000000000000000000000000000000000";
+      var scores = Game.getPlayerScores(board);
+      var blackExpected = 8;
+      var whiteExpected = 9;
+      expect(scores.black).toEqual(blackExpected);
+      expect(scores.white).toEqual(whiteExpected);
+    });
+
+    it('should correctly ignore a region that is connected to both black and white stones', 
+      function() {
+      var board = "000000000200100000201010000001001000001021000200110000202020000020000000000000200";
+      var scores = Game.getPlayerScores(board);
+      var blackExpected = 9;
+      var whiteExpected = 9;
+      expect(scores.black).toEqual(blackExpected);
+      expect(scores.white).toEqual(whiteExpected);
+    });
+
+  });
 });
