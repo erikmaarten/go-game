@@ -72,9 +72,7 @@ App = React.createClass({
     if ( ! this.data.activeGame) {
       if (this.data.endedGame) {
         return (<div className="container">
-          <header>
-            <h1>Go</h1>
-          </header>
+          <AppHeader />
           <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
           <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
           <Board data={this.data.endedGame.board} players={this.data.endedGame.players} />
@@ -82,9 +80,7 @@ App = React.createClass({
       } else {
         return (
           <div className="container">
-            <header>
-              <h1>Go</h1>
-            </header>
+            <AppHeader />
             <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
             <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
           </div>
@@ -95,9 +91,7 @@ App = React.createClass({
       this.data.activeGame.players[0].userId === Meteor.userId()) {
       return (
         <div className="container">
-          <header>
-            <h1>Go</h1>
-          </header>
+          <AppHeader />
           <h2>Waiting for player to join...</h2>
         </div>
       );
@@ -106,9 +100,7 @@ App = React.createClass({
       this.data.activeGame.players[0].userId !== Meteor.userId()) {
       return (
         <div className="container">
-          <header>
-            <h1>Go</h1>
-          </header>
+          <AppHeader />
           <button type="button" onClick={this.handleJoinGame}>Join game</button>
         </div>
       );
@@ -116,9 +108,7 @@ App = React.createClass({
     } else {
       return (
         <div className="container">
-          <header>
-            <h1>Go</h1>
-          </header>
+          <AppHeader />
           <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
 
           <GameInfo players={this.data.activeGame.players} 
@@ -129,5 +119,15 @@ App = React.createClass({
         </div>
       );
     }
+  }
+});
+
+AppHeader = React.createClass({
+  render() {
+    return (
+        <header>
+          <h1>Go</h1>
+        </header>
+      );
   }
 });
