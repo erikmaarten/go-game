@@ -58,14 +58,15 @@ describe('Go logic', function() {
   describe('Get adjacent positions', function() {
     it('should not return positions that cross horizontal board boundaries', function() {
       var pos = 18;
-      var adj = Game.getAdjacentPositions(pos);
+      var boardWidth = 19;
+      var adj = Game.getAdjacentPositions(pos, boardWidth);
       var expected = [17, 37];
       expect(adj[0]).toEqual(expected[0]);
       expect(adj[1]).toEqual(expected[1]);
       expect(adj.length).toEqual(expected.length);
 
       pos = 37;
-      adj = Game.getAdjacentPositions(pos);
+      adj = Game.getAdjacentPositions(pos, boardWidth);
       expected = [36, 56, 18];
       expect(adj[0]).toEqual(expected[0]);
       expect(adj[1]).toEqual(expected[1]);
