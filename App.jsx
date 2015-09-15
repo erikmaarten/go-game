@@ -79,12 +79,13 @@ App = React.createClass({
         <header>
           <h1>Go</h1>
         </header>
-        <h2>Player turn: {this.data.activeGame.currentPlayer}</h2>
-        <GameInfo players={this.data.activeGame.players} />
-
         <button type="button" onClick={this.handleClickNewGame}>New game</button>
         <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
         <button type="button" onClick={this.handleJoinGame}>Join game</button>
+
+        <GameInfo players={this.data.activeGame.players} 
+          currentPlayer={this.data.activeGame.currentPlayer} />
+
         <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
  
       </div>

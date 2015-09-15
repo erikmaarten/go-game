@@ -8,7 +8,6 @@ Intersection = React.createClass({
 
   handleClick() {
     var pos = this.props.position;
-    console.log(pos);
     var color = _.chain(this.props.players)
       .filter(function(player) {
         return player.userId === Meteor.userId();
