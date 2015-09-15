@@ -11,7 +11,8 @@ App = React.createClass({
 
     return {
       loading: ! handle.ready(),
-      activeGame: Games.findOne({status: "active"})
+      activeGame: Games.findOne({status: "active"}),
+      endedGame: Games.findOne({status: "ended"})
     };
   },
 
@@ -69,15 +70,26 @@ App = React.createClass({
     // 4 possibilities:
     // 1. There's no active game.
     if ( ! this.data.activeGame) {
-      return (
-        <div className="container">
+      if (this.data.endedGame) {
+        return (<div className="container">
           <header>
             <h1>Go</h1>
           </header>
           <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
           <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
-        </div>
-      );
+          <Board data={this.data.endedGame.board} players={this.data.endedGame.players} />
+        </div>);
+      } else {
+        return (
+          <div className="container">
+            <header>
+              <h1>Go</h1>
+            </header>
+            <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
+            <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
+          </div>
+        );
+      }
     // 2. This player created the game and is waiting for another player to join
     } else if (this.data.activeGame.players.length === 1 && 
       this.data.activeGame.players[0].userId === Meteor.userId()) {

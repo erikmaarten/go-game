@@ -31,7 +31,7 @@ Game.getEmptyGroups = function(board) {
   return emptyGroups;
 }
 
-Game.getPlayerScores = function(board) {
+Game.getFinalScore = function(board) {
   check(board, String);
 
   var score = {
