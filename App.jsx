@@ -15,15 +15,6 @@ App = React.createClass({
     };
   },
 
-  getGame() {
-    return this.data.activeGame;
-  },
-
- 
-  renderGame() {
-    return this.data.activeGame.board;
-  },
-
   createNewGameSmall(event) {
     event.preventDefault();
     var size = 9;
@@ -68,13 +59,6 @@ App = React.createClass({
     } else {
       alert("Log in first!");
     }
-  },
-
-  handlePass(event) {
-    event.preventDefault();
-    Meteor.call("pass", function(error, result) {
-      if (error) {console.log("error calling pass: " + error);}
-    });
   },
  
   render() {
@@ -127,9 +111,7 @@ App = React.createClass({
 
           <GameInfo players={this.data.activeGame.players} 
             currentPlayer={this.data.activeGame.currentPlayer} />
-
-          <button type="button" onClick={this.handlePass}>Pass</button>
-
+          <GameActions />
           <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
    
         </div>
