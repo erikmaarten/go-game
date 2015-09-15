@@ -31,12 +31,14 @@ Game.getEmptyGroups = function(board) {
   return emptyGroups;
 }
 
-Game.getPlayerScore = function(board, stone) {
-  var checkStoneType = Match.Where(function(x) {
-    return x === "1" || x === "2";
-  });
-  check(stone, checkStoneType);
+Game.getPlayerScores = function(board) {
   check(board, String);
+
+  var score = {
+    black: 0,
+    white: 0
+  };
+  var boardWidth = Game.getBoardWidth(board);
 
   // 1. Get all empty groups
   // 2. For each empty group, check if that group has adjacent stones
@@ -45,8 +47,38 @@ Game.getPlayerScore = function(board, stone) {
   // 3. Count the number of stones on the board for each player, and add
   // to their scores
 
+  // 1
+  var emptyGroups = Game.getEmptyGroups(board);
 
+  // 2
+  _.each(emptyGroups, function(group) {
+    var numBlack = 0;
+    var numWhite = 0;
+    // Go through each position in the group
+    // get adjacent, check their color
+    _.each(group, function(posInString) {
+      var adjacent = Game.getAdjacentPositions(posInString, boardWidth);
+      _.each(adjacent, function(adjPos) {
+        adjType = board[adjPos];
+        if (adjType === BLACK_CHAR) numBlack += 1; 
+        else if (adjType === WHITE_CHAR) numWhite += 1; 
+      });
+    });
 
+    // If there were adjacent stones of only one color, count group
+    // to that player's score
+    if (numBlack > 0 && numWhite === 0) {
+      score.black += group.length;
+    } else if (numWhite > 0 && numBlack === 0) {
+      score.white += group.length;
+    }
+  });
+
+  // 3
+  score.black += Game.countNumStones(board, "black");
+  score.white += Game.countNumStones(board, "white");
+
+  return score;
 }
 
 Game.countNumStones = function(board, color) {
