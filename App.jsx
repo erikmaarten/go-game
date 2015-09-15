@@ -111,7 +111,7 @@ App = React.createClass({
 
           <GameInfo players={this.data.activeGame.players} 
             currentPlayer={this.data.activeGame.currentPlayer} />
-          <GameActions />
+          <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
           <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
    
         </div>
