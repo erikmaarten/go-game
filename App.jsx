@@ -24,10 +24,23 @@ App = React.createClass({
     return this.data.activeGame.board;
   },
 
-  handleClickNewGame(event) {
+  createNewGameSmall(event) {
     event.preventDefault();
+    var size = 9;
     if (Meteor.userId()) {
-      Meteor.call("createNewGame", function(error, result) {
+      Meteor.call("createNewGame", size, function(error, result) {
+        if (error) {console.log("error in createNewGame: " + error);}
+      });
+    } else {
+      alert("Log in first!");
+    }
+  },
+
+  createNewGameBig(event) {
+    event.preventDefault();
+    var size = 19;
+    if (Meteor.userId()) {
+      Meteor.call("createNewGame", size, function(error, result) {
         if (error) {console.log("error in createNewGame: " + error);}
       });
     } else {
@@ -62,33 +75,56 @@ App = React.createClass({
       return <p>Loading...</p>;
     }
 
-    if (!this.data.activeGame) {
+    // 4 possibilities:
+    // 1. There's no active game.
+    if ( ! this.data.activeGame) {
       return (
         <div className="container">
           <header>
             <h1>Go</h1>
           </header>
+          <button type="button" onClick={this.createNewGameBig}>New game (big)</button>
+          <button type="button" onClick={this.createNewGameSmall}>New game (small)</button>
+        </div>
+      );
+    // 2. This player created the game and is waiting for another player to join
+    } else if (this.data.activeGame.players.length === 1 && 
+      this.data.activeGame.players[0].userId === Meteor.userId()) {
+      return (
+        <div className="container">
+          <header>
+            <h1>Go</h1>
+          </header>
+          <h2>Waiting for player to join...</h2>
+        </div>
+      );
+    // 3. There's a game waiting for another player to join, and this player may join
+    } else if (this.data.activeGame.players.length === 1 &&
+      this.data.activeGame.players[0].userId !== Meteor.userId()) {
+      return (
+        <div className="container">
+          <header>
+            <h1>Go</h1>
+          </header>
+          <button type="button" onClick={this.handleJoinGame}>Join game</button>
+        </div>
+      );
+    // 4. There is an active game with 2 players already
+    } else {
+      return (
+        <div className="container">
+          <header>
+            <h1>Go</h1>
+          </header>
+          <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
 
-          <button type="button" onClick={this.handleClickNewGame}>New game</button>
+          <GameInfo players={this.data.activeGame.players} 
+            currentPlayer={this.data.activeGame.currentPlayer} />
+
+          <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
+   
         </div>
       );
     }
-
-    return (
-      <div className="container">
-        <header>
-          <h1>Go</h1>
-        </header>
-        <button type="button" onClick={this.handleClickNewGame}>New game</button>
-        <button type="button" onClick={this.handleClickDeleteGame}>Delete game</button>
-        <button type="button" onClick={this.handleJoinGame}>Join game</button>
-
-        <GameInfo players={this.data.activeGame.players} 
-          currentPlayer={this.data.activeGame.currentPlayer} />
-
-        <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
- 
-      </div>
-    );
   }
 });

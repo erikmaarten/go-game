@@ -8,25 +8,37 @@ Game.countNumStones = function(board, color) {
   return board.split(stone).length - 1;
 }
 
-Game.matrixPosToLinearPos = function(position) {
-  return position[0] * BOARD_WIDTH + position[1];
+Game.getBoardWidth = function(board) {
+  check(board, String);
+  var width = Math.sqrt(board.length);
+  if (width === Math.round(width)) {
+    return width;
+  } else {
+    throw new Meteor.Error("invalid_board_width");
+  }
 }
 
-Game.linearPosToMatrixPos = function(pos) {
-  check(pos, Number);
-  return [Math.floor(pos / BOARD_WIDTH), pos % BOARD_WIDTH];
+Game.matrixPosToLinearPos = function(position, boardWidth) {
+  check(position, [Number]);
+  check(boardWidth, Number);
+  return position[0] * boardWidth + position[1];
 }
-Game.newBoard = function() {
+
+Game.linearPosToMatrixPos = function(pos, boardWidth) {
+  check(pos, Number);
+  check(boardWidth, Number);
+  return [Math.floor(pos / boardWidth), pos % boardWidth];
+}
+Game.newBoard = function(width) {
   var board = "";
-  for (var i = 0; i < BOARD_WIDTH*BOARD_WIDTH; i++) {
+  for (var i = 0; i < width*width; i++) {
     board += "0";
   }
   return board;
 }
 
 Game.placeStone = function(position) {
-  var positionInString = this.matrixPosToLinearPos(position);
-  Meteor.call("placeStone", positionInString, function(error, result) {
+  Meteor.call("placeStone", position, function(error, result) {
     if (error) {console.log("error in insertStone: " + error);}
   });
 }
@@ -47,8 +59,9 @@ Game.capture = function(board, playedPosition) {
   //  with zero liberties. If there are any, this move is not legal
   //  but that concern is handled elsewhere.
 
-  var stringPos = Game.matrixPosToLinearPos(playedPosition);
-  var adjacent = Game.getAdjacentPositions(stringPos);
+  var boardWidth = Game.getBoardWidth(board);
+  var stringPos = Game.matrixPosToLinearPos(playedPosition, boardWidth);
+  var adjacent = Game.getAdjacentPositions(stringPos, boardWidth);
   var playerType = board[stringPos];
 
   // Capture opponent's stones
@@ -59,12 +72,12 @@ Game.capture = function(board, playedPosition) {
     })
     .filter(function(position) {
       // return only positions where stones have zero liberties
-      var matrixPos = Game.linearPosToMatrixPos(position);
+      var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
       return Game.numberOfLiberties(board, matrixPos) === 0;
     })
     .map(function(position) {
       // return the groups that the positions belong to
-      var matrixPos = Game.linearPosToMatrixPos(position);
+      var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
       //console.log("Game.getGroup: " + JSON.stringify(Game.getGroup(board, matrixPos)));
       return Game.getGroup(board, matrixPos);
     })
@@ -92,12 +105,12 @@ Game.capture = function(board, playedPosition) {
     })
     .filter(function(position) {
       // return only positions where stones have zero liberties
-      var matrixPos = Game.linearPosToMatrixPos(position);
+      var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
       return Game.numberOfLiberties(board, matrixPos) === 0;
     })
     .map(function(position) {
       // return the groups that the positions belong to
-      var matrixPos = Game.linearPosToMatrixPos(position);
+      var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
       //console.log("Game.getGroup: " + JSON.stringify(Game.getGroup(board, matrixPos)));
       return Game.getGroup(board, matrixPos);
     })
@@ -118,7 +131,8 @@ Game.getGroup = function(board, fromMatrixPosition) {
   check(board, String);
   check(fromMatrixPosition, [Number]);
 
-  var positionInString = Game.matrixPosToLinearPos(fromMatrixPosition);
+  var boardWidth = Game.getBoardWidth(board);
+  var positionInString = Game.matrixPosToLinearPos(fromMatrixPosition, boardWidth);
   var inGroup = [];
   var checked = [];
   var toCheck = [positionInString];
@@ -144,7 +158,7 @@ Game.getGroup = function(board, fromMatrixPosition) {
     // Get all adjacent positions. If they are already checked,
     // filter out. If not checked, and if not in the list toCheck,
     // add to toCheck so that a future iteration will check that position.
-    _.chain(Game.getAdjacentPositions(currentPosition))
+    _.chain(Game.getAdjacentPositions(currentPosition, boardWidth))
       .filter(function(rawPos) {
         // filter out the positions that have already been checked
         return (checked.indexOf(rawPos) === -1);
@@ -165,10 +179,11 @@ Game.numberOfLiberties = function(board, position) {
   // 3. return all unique liberties
 
   var positionsInGroup = Game.getGroup(board, position);
+  var boardWidth = Game.getBoardWidth(board);
   return _.chain(positionsInGroup)
     .map(function(position) {
       // return all adjacent positions
-      return Game.getAdjacentPositions(position);
+      return Game.getAdjacentPositions(position, boardWidth);
     })
     .flatten()
     // Keep only unique positions
@@ -188,14 +203,15 @@ Game.colorNameToStoneType = {
   white: 2
 };
 
-Game.getAdjacentPositions = function(stringPos) {
+Game.getAdjacentPositions = function(stringPos, boardWidth) {
   check(stringPos, Number);
-  return _.chain([ 1, -1, BOARD_WIDTH, - BOARD_WIDTH ])
+  check(boardWidth, Number);
+  return _.chain([ 1, -1, boardWidth, - boardWidth ])
       .filter(function (step) {
         // filter out steps that cross horizontal board boundaries
         // such as 19 - 1 or 18 + 1
-        return !((stringPos % 19 === 0 && step === -1) || 
-          ( (stringPos + 1) % 19 === 0 && step === 1));
+        return !((stringPos % boardWidth === 0 && step === -1) || 
+          ( (stringPos + 1) % boardWidth === 0 && step === 1));
 
       })
       .map(function(step) {
@@ -206,7 +222,7 @@ Game.getAdjacentPositions = function(stringPos) {
         // filter out positions that are outside the board
         // The largest string index that represents a board position
         // is BOARD_WIDTH * BOARD_WIDTH - 1
-        return !(rawPos < 0 || rawPos > BOARD_WIDTH * BOARD_WIDTH - 1);
+        return !(rawPos < 0 || rawPos > boardWidth * boardWidth - 1);
       })
       .value();
 }

@@ -5,6 +5,7 @@ Board = React.createClass({
     players: React.PropTypes.array.isRequired
   },
 
+  // Split a in n equal parts
   split(a, n) {
     var len = a.length,out = [], i = 0;
     while (i < len) {
@@ -20,7 +21,7 @@ Board = React.createClass({
   },
 
   render() {
-    var board_rows = this.split(this.props.data, 19);
+    var board_rows = this.split(this.props.data, Game.getBoardWidth(this.props.data));
     var rows = board_rows.map((row, index) => {
       return <BoardRow data={row} rowIndex={index} players={this.props.players} />;
     });
