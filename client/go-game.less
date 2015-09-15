@@ -16,12 +16,15 @@
   padding: (@intersection-width - @stone-width) / 2;
   width: @intersection-width;
   height: @intersection-width;
+  border-radius: 50%;
+  transition: background-color 0.3s ease-in;
 }
 
 .intersection-empty:hover {
   cursor: pointer;
   background-color: lighten(orange, 10);
   border-radius: 50%;
+  transition: background-color 0.3s ease-in;
 }
 
 .stone-mixin {
