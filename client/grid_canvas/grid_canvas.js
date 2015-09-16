@@ -57,8 +57,9 @@ GridCanvas.draw = function(canvasContext, boardWidthUnits, boardWidthPx, unitWid
     canvasContext.moveTo(start_x, start_y);
     canvasContext.lineTo(end_x, end_y);
   }
+  canvasContext.fillStyle = "#dcb35c";
+  canvasContext.fillRect(0, 0, boardWidthPx, boardWidthPx);
 
-  canvasContext.strokeStyle = "#eee";
-
+  canvasContext.strokeStyle = "#000";
   canvasContext.stroke();
 }
