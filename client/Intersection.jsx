@@ -21,9 +21,7 @@ Intersection = React.createClass({
 
   render() {
     var classes = "intersection";
-    if (this.props.type === BLACK_STONE || this.props.type === WHITE_STONE) {
-      classes += " intersection-filled";
-    } else {
+    if (this.props.type === NO_STONE) {
       classes += " intersection-empty";
     }
 
@@ -32,7 +30,7 @@ Intersection = React.createClass({
       stoneClass = "stone-black";
     } else if (this.props.type === WHITE_STONE) {
       stoneClass = "stone-white";
-    } else {
+    } else if (this.props.type === NO_STONE) {
       stoneClass = "no-stone";
     }
 

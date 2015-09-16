@@ -48,8 +48,8 @@ GameInfo = React.createClass({
           <h2>{isYou ? 
             "Your turn!" : "Waiting for your opponent to play..."}
           </h2>
-          <p><Stone color={myColor} /> {this.data.me.emails[0].address}</p>
-          <p><Stone color={yourColor} /> {this.data.you.emails[0].address}</p>
+          <p>{myColor}: {this.data.me.emails[0].address}</p>
+          <p>{yourColor}: {this.data.you.emails[0].address}</p>
         </div>
       )
     }
