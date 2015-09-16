@@ -7,16 +7,18 @@ Intersection = React.createClass({
   },
 
   handleClick() {
-    var pos = this.props.position;
-    var color = _.chain(this.props.players)
-      .filter(function(player) {
-        return player.userId === Meteor.userId();
-      })
-      .map(function(player) {
-        return player.color;
-      })
-      .value()[0];
-    Game.placeStone(pos);
+    if (this.props.type === NO_STONE) {
+      var pos = this.props.position;
+      var color = _.chain(this.props.players)
+        .filter(function(player) {
+          return player.userId === Meteor.userId();
+        })
+        .map(function(player) {
+          return player.color;
+        })
+        .value()[0];
+      Game.placeStone(pos);
+    }
   },
 
   render() {
@@ -36,8 +38,8 @@ Intersection = React.createClass({
 
     var positionKey = this.props.position[0] + ", " + this.props.position[1];
     return (
-      <span className={classes} key={positionKey} >
-        <span className={stoneClass} onClick={this.handleClick}>
+      <span className={classes} key={positionKey} onClick={this.handleClick} >
+        <span className={stoneClass} >
           {stoneClass === "no-stone" ? "+" : ""}
         </span>
       </span>
