@@ -24,14 +24,6 @@
   width: @intersection-width;
   height: @intersection-width;
   border-radius: 50%;
-  transition: background-color 0.3s ease-in;
-}
-
-.intersection-empty:hover {
-  cursor: pointer;
-  background-color: lighten(orange, 10);
-  border-radius: 50%;
-  transition: background-color 0.3s ease-in;
 }
 
 .stone-mixin {
@@ -53,4 +45,28 @@
   background-color: white;
 }
 
-.no-stone {visibility: hidden;}
+.no-stone {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  width: @stone-width;
+  height: @stone-width;
+  border-radius: 50%;
+}
+
+.hover-empty-mixin {
+  .stone-mixin;
+
+  cursor: pointer;
+  opacity: 0.5;
+  transition: background-color 0.5s ease, border 0.5s ease;
+}
+
+.hover-empty-black {
+  .hover-empty-mixin;
+  background-color: black;
+}
+.hover-empty-white {
+  .hover-empty-mixin;
+  background-color: white;
+}

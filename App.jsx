@@ -67,6 +67,21 @@ App = React.createClass({
       return <p>Loading...</p>;
     }
 
+    var playerColor, game;
+    if (this.data.activeGame) game = this.data.activeGame;
+    else if (this.data.endedGame) game = this.data.endedGame;
+
+    if (game) {
+      playerColor = _.chain(game.players)
+        .filter(function(player) {
+          return player.userId === Meteor.userId();
+        })
+        .map(function(player) {
+          return player.color;
+        })
+        .value()[0];
+    }
+
     // 4 possibilities:
     // 1. There's no active game.
     if ( ! this.data.activeGame) {
@@ -114,7 +129,8 @@ App = React.createClass({
           <GameInfo players={this.data.activeGame.players} 
             currentPlayer={this.data.activeGame.currentPlayer} />
           <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
-          <Board data={this.data.activeGame.board} players={this.data.activeGame.players} />
+          <Board data={this.data.activeGame.board} playerColor={playerColor} 
+            players={this.data.activeGame.players} />
    
         </div>
       );

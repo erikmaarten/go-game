@@ -3,7 +3,8 @@ Intersection = React.createClass({
   propTypes: {
     type: React.PropTypes.string.isRequired,
     position: React.PropTypes.array.isRequired,
-    players: React.PropTypes.array.isRequired
+    players: React.PropTypes.array.isRequired,
+    playerColor: React.PropTypes.string.isRequired
   },
 
   handleClick() {
@@ -18,6 +19,24 @@ Intersection = React.createClass({
         })
         .value()[0];
       Game.placeStone(pos);
+    }
+  },
+
+  mouseOver(event) {
+    if (this.props.type !== NO_STONE) {
+      return;
+    } else {
+      var hoverClass = "hover-empty-" + this.props.playerColor;
+      $(event.currentTarget).addClass(hoverClass);
+    }
+  },
+
+  mouseOut(event) {
+    if (this.props.type !== NO_STONE) {
+      return;
+    } else {
+      var hoverClass = "hover-empty-" + this.props.playerColor;
+      $(event.currentTarget).removeClass(hoverClass);
     }
   },
 
@@ -38,9 +57,10 @@ Intersection = React.createClass({
 
     var positionKey = this.props.position[0] + ", " + this.props.position[1];
     return (
-      <span className={classes} key={positionKey} onClick={this.handleClick} >
-        <span className={stoneClass} >
-          {stoneClass === "no-stone" ? "+" : ""}
+      <span className={classes} key={positionKey} onClick={this.handleClick} 
+         >
+        <span className={stoneClass} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} >
+          {stoneClass === "no-stone" ? "" : ""}
         </span>
       </span>
     );
