@@ -20,25 +20,29 @@ Intersection = React.createClass({
   },
 
   render() {
-    if (this.props.type == 1) {
-      // is black stone
-      return (
-        <span className="intersection intersection-filled">
-          <Stone color="black" />
-        </span>
-      );
-    } else if (this.props.type == 2) {
-      // is white stone
-      return (
-        <span className="intersection intersection-filled">
-          <Stone color="white" />
-        </span>
-      );
+    var classes = "intersection";
+    if (this.props.type === BLACK_STONE || this.props.type === WHITE_STONE) {
+      classes += " intersection-filled";
     } else {
-      // Is empty intersection
-      return (
-        <span className="intersection intersection-empty" onClick={this.handleClick}>+</span>
-      );
+      classes += " intersection-empty";
     }
+
+    var stoneClass = "";
+    if (this.props.type === BLACK_STONE) {
+      stoneClass = "stone-black";
+    } else if (this.props.type === WHITE_STONE) {
+      stoneClass = "stone-white";
+    } else {
+      stoneClass = "no-stone";
+    }
+
+    var positionKey = this.props.position[0] + ", " + this.props.position[1];
+    return (
+      <span className={classes} key={positionKey} >
+        <span className={stoneClass} onClick={this.handleClick}>
+          {stoneClass === "no-stone" ? "+" : ""}
+        </span>
+      </span>
+    );
   }
 });
