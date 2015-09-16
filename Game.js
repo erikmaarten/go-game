@@ -60,8 +60,8 @@ Game.getFinalScore = function(board) {
       var adjacent = Game.getAdjacentPositions(posInString, boardWidth);
       _.each(adjacent, function(adjPos) {
         adjType = board[adjPos];
-        if (adjType === BLACK_CHAR) numBlack += 1; 
-        else if (adjType === WHITE_CHAR) numWhite += 1; 
+        if (adjType === BLACK_STONE) numBlack += 1; 
+        else if (adjType === WHITE_STONE) numWhite += 1; 
       });
     });
 
