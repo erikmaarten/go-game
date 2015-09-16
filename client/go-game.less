@@ -1,8 +1,15 @@
 @intersection-width: 30px;
 @stone-width: 20px;
 
+#grid-canvas {
+  position: absolute;
+  z-index: 0;
+}
+
 #render-target {
+  position: relative;
   text-align: center;
+  z-index: 1;
 }
 
 .board-row {
@@ -45,3 +52,5 @@
   .stone-mixin;
   background-color: white;
 }
+
+.no-stone {visibility: hidden;}
