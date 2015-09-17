@@ -44,7 +44,7 @@ App = React.createClass({
     }
 
     var activeGame = this.data.activeGame;
-    var showOldGame = !activeGame ? true : false;
+    var showOldGame = !activeGame && this.data.endedGame ? true : false;
     var gameInProgress = activeGame && activeGame.players.length === 2;
     var isGameWaitingForPlayerJoin = activeGame && activeGame.players.length === 1;
 

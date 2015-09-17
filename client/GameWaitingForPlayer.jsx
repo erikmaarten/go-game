@@ -8,9 +8,6 @@ GameWaitingForPlayer = React.createClass({
     if (Meteor.userId()) {
       Meteor.call("deleteGame", function(error, result) {
         if (error) {console.log("error in deleteGame: " + error);}
-        else {
-          GridCanvas.delayedRender();
-        }
       });
     } else {
       alert("Log in first!");
