@@ -1,10 +1,14 @@
 GridCanvas = {};
 var renderTimeout;
+
 GridCanvas.delayedRender = function() {
   Meteor.clearTimeout(renderTimeout);
-  renderTimeout = Meteor.setTimeout(function() {
-    GridCanvas.positionAndRender();
-  }, 400);
+  var delays = [5, 50, 100, 400, 800, 1600, 3200, 6400];
+  _.each(delays, function(delay) {
+    renderTimeout = Meteor.setTimeout(function() {
+      GridCanvas.positionAndRender();
+    }, delay);
+  });
 }
 
 GridCanvas.positionAndRender = function() {

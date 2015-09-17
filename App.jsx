@@ -19,11 +19,11 @@ App = React.createClass({
     };
   },
 
-  render() {
-    // Canvas must be updated, so that if the board position changes,
-    // the canvas background is changed too
+  componentDidUpdate() {
     GridCanvas.delayedRender();
+  },
 
+  render() {
     if (this.data.loading) {
       return <p>Loading...</p>;
     }
@@ -43,20 +43,27 @@ App = React.createClass({
         .value()[0];
     }
 
-    var showOldGame = !this.data.activeGame ? true : false;
-    var gameInProgress = this.data.activeGame && this.data.activeGame.players.length === 2;
+    var activeGame = this.data.activeGame;
+    var showOldGame = !activeGame ? true : false;
+    var gameInProgress = activeGame && activeGame.players.length === 2;
+    var isGameWaitingForPlayerJoin = activeGame && activeGame.players.length === 1;
 
     return (
       <div className="container">
         <AppHeader />
         <MetaActions game={game} />
-        {gameInProgress ? <GameInfo players={this.data.activeGame.players} 
-          currentPlayer={this.data.activeGame.currentPlayer} />
+        {gameInProgress ? 
+          <div>
+            <GameInfo players={this.data.activeGame.players} 
+              currentPlayer={this.data.activeGame.currentPlayer} />
+            <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
+            <Board data={this.data.activeGame.board} playerColor={playerColor} 
+              players={this.data.activeGame.players} />
+          </div>
           : ""}
-        {gameInProgress ? <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
+        {isGameWaitingForPlayerJoin ? 
+          <GameWaitingForPlayer game={this.data.activeGame} />
           : ""}
-        {gameInProgress ? <Board data={this.data.activeGame.board} playerColor={playerColor} 
-          players={this.data.activeGame.players} /> : ""}
         {showOldGame ? <EndedGame game={this.data.endedGame} /> : ""}
       </div>
     );
