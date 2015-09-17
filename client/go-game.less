@@ -1,6 +1,22 @@
 @intersection-width: 30px;
 @stone-width: 20px;
 
+body {
+  background: url("/bg.png");
+}
+
+#game-info {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  background-color: lighten(#ccc, 10);
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.6);
+}
+
+#game-info p {
+  margin: 0px;
+}
+
 #grid-canvas {
   position: absolute;
   z-index: 0;
