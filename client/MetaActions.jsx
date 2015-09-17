@@ -69,7 +69,7 @@ MetaActions = React.createClass({
     var canJoin = gameExists && isGameActive ? game.players.length === 1 &&
       game.players[0].userId !== Meteor.userId() : false;
 
-    var canDelete = gameExists ? game.players[0].userId === Meteor.userId()
+    var canDelete = gameExists && game.status !== "active" ? game.players[0].userId === Meteor.userId()
       : false;
     var canCreate = !gameExists || (gameExists && !isGameActive);
 

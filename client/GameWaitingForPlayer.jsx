@@ -3,6 +3,20 @@ GameWaitingForPlayer = React.createClass({
     game: React.PropTypes.object.isRequired
   },
 
+  cancelGame(event) {
+    event.preventDefault();
+    if (Meteor.userId()) {
+      Meteor.call("deleteGame", function(error, result) {
+        if (error) {console.log("error in deleteGame: " + error);}
+        else {
+          GridCanvas.delayedRender();
+        }
+      });
+    } else {
+      alert("Log in first!");
+    }
+  },
+
   // If game is waiting for another player to join,
   // the current player is either the player who started
   // or can join
@@ -13,7 +27,9 @@ GameWaitingForPlayer = React.createClass({
       : "Press 'Join game' to play.";
     return (
       <div className="loading-with-text">
-        <p>{text}</p>
+        <p>{text} {playerStartedGame ? 
+          <button type="button" onClick={this.cancelGame} >cancel</button> : ""}
+        </p>
         {playerStartedGame ? <LoadingSpinner /> : ""}
       </div>
       );
