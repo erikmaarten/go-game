@@ -4,11 +4,14 @@ Intersection = React.createClass({
     type: React.PropTypes.string.isRequired,
     position: React.PropTypes.array.isRequired,
     players: React.PropTypes.array.isRequired,
-    playerColor: React.PropTypes.string.isRequired
+    playerColor: React.PropTypes.string.isRequired,
+    currentPlayer: React.PropTypes.string.isRequired
   },
 
   handleClick() {
-    if (this.props.type === NO_STONE) {
+    if (this.props.currentPlayer !== Meteor.userId()) {
+      return;
+    } else if (this.props.type === NO_STONE) {
       var pos = this.props.position;
       var color = _.chain(this.props.players)
         .filter(function(player) {
