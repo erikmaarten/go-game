@@ -1,4 +1,12 @@
 GridCanvas = {};
+var renderTimeout;
+GridCanvas.delayedRender = function() {
+  return false;
+  Meteor.clearTimeout(renderTimeout);
+  renderTimeout = Meteor.setTimeout(function() {
+    GridCanvas.positionAndRender();
+  }, 400);
+}
 
 GridCanvas.positionAndRender = function() {
   var firstBoardElement = $('.intersection')[0].getBoundingClientRect();

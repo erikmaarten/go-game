@@ -8,12 +8,8 @@ if (Meteor.isClient) {
       GridCanvas.positionAndRender();
     }, 1000);
 
-    var resizeTimer;
     $(window).bind('resize', function() {
-      Meteor.clearTimeout(resizeTimer);
-      resizeTimer = Meteor.setTimeout(function() {
-        GridCanvas.positionAndRender();
-      }, 50);
+      GridCanvas.delayedRender();
     });
 
   });
