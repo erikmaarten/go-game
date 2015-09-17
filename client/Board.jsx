@@ -24,8 +24,8 @@ Board = React.createClass({
   render() {
     var board_rows = this.split(this.props.data, Game.getBoardWidth(this.props.data));
     var rows = board_rows.map((row, index) => {
-      return <BoardRow data={row} rowIndex={index} playerColor={this.props.playerColor} 
-        players={this.props.players} />;
+      return <BoardRow data={row} rowIndex={index} key={index} 
+        playerColor={this.props.playerColor} players={this.props.players} />;
     });
     /*
     var rows = _.each(board_rows, function(element, index) {
@@ -49,7 +49,8 @@ BoardRow = React.createClass({
     var raw_intersections = this.props.data.split("");
     var intersections = raw_intersections.map((type, index) => {
       return <Intersection playerColor={this.props.playerColor} 
-        players={this.props.players} type={type} position={[this.props.rowIndex, index]} />;
+        players={this.props.players} type={type} key={this.props.rowIndex + " " + index} 
+        position={[this.props.rowIndex, index]} />;
     });
     return (
       <div className="board-row">{intersections}</div>
