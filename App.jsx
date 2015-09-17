@@ -5,8 +5,11 @@ App = React.createClass({
   getMeteorData() {
     var handle = Meteor.subscribe("games");
     var game = Games.findOne({status: "active"});
+    var oldGame = Games.findOne({status: "ended"});
     if (game && game.board) {
-      Session.set("board", Games.findOne({status: "active"}).board);
+      Session.set("board", game.board);
+    } else if (oldGame && oldGame.board) {
+      Session.set("board", oldGame.board);
     }
 
     return {
