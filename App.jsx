@@ -40,21 +40,21 @@ App = React.createClass({
         .value()[0];
     }
 
-    var gameEnded = (!this.data.activeGame || this.data.activeGame.players.length < 2)
-      && this.data.endedGame;
+    var showOldGame = !this.data.activeGame ? true : false;
+    var gameInProgress = this.data.activeGame && this.data.activeGame.players.length === 2;
 
     return (
       <div className="container">
         <AppHeader />
         <MetaActions game={game} />
-        {this.data.activeGame ? <GameInfo players={this.data.activeGame.players} 
+        {gameInProgress ? <GameInfo players={this.data.activeGame.players} 
           currentPlayer={this.data.activeGame.currentPlayer} />
           : ""}
-        {this.data.activeGame ? <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
+        {gameInProgress ? <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
           : ""}
-        {this.data.activeGame ? <Board data={this.data.activeGame.board} playerColor={playerColor} 
+        {gameInProgress ? <Board data={this.data.activeGame.board} playerColor={playerColor} 
           players={this.data.activeGame.players} /> : ""}
-        {gameEnded ? <EndedGame game={this.data.endedGame} /> : ""}
+        {showOldGame ? <EndedGame game={this.data.endedGame} /> : ""}
       </div>
     );
   }

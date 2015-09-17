@@ -1,7 +1,6 @@
 GridCanvas = {};
 var renderTimeout;
 GridCanvas.delayedRender = function() {
-  return false;
   Meteor.clearTimeout(renderTimeout);
   renderTimeout = Meteor.setTimeout(function() {
     GridCanvas.positionAndRender();
@@ -9,6 +8,12 @@ GridCanvas.delayedRender = function() {
 }
 
 GridCanvas.positionAndRender = function() {
+  // Don't do anything if there is no board
+  // on the page
+  var boardExists = $('.intersection').length !== 0;
+  if (!boardExists) {
+    return false;
+  }
   var firstBoardElement = $('.intersection')[0].getBoundingClientRect();
   var top = firstBoardElement.top;
   var width = firstBoardElement.width;
