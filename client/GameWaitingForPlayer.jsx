@@ -8,15 +8,23 @@ GameWaitingForPlayer = React.createClass({
   // or can join
   render() {
     var players = this.props.game.players;
-    var text;
-    if (players[0].userId === Meteor.userId()) {
-      text = "Waiting for another player to join...";
-    } else {
-      text = "Press 'Join game' to play.";
-    }
+    var playerStartedGame = players[0].userId === Meteor.userId();
+    var text = playerStartedGame ? "Waiting for another player to join..."
+      : "Press 'Join game' to play.";
     return (
-      <p>{{text}}</p>
+      <div className="loading-with-text">
+        <p>{text}</p>
+        {playerStartedGame ? <LoadingSpinner /> : ""}
+      </div>
       );
   }
   
+});
+
+LoadingSpinner = React.createClass({
+  render() {
+    return (
+      <div className="loading-spinner"></div>
+      );
+  }
 });
