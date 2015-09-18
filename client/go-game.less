@@ -18,6 +18,25 @@ body {
   margin: 0px;
 }
 
+.turn-indicator-mixin {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+.turn-indicator-white {
+  .turn-indicator-mixin;
+  background-color: white;
+}
+.turn-indicator-black {
+  .turn-indicator-mixin;
+  background-color: black;
+}
+
+td.invisible {
+  visibility: hidden;
+}
+
 #game-actions {
   margin: 10px;
 }

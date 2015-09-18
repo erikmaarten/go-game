@@ -46,11 +46,22 @@ GameInfo = React.createClass({
       return (
         <div>
           <div id="game-info">
-            <h2>{isYou ? 
-              "Your turn!" : "Waiting for your opponent to play..."}
-            </h2>
-            <p>{myColor}: {this.data.me.emails[0].address}</p>
-            <p>{yourColor}: {this.data.you.emails[0].address}</p>
+            <table>
+              <tr>
+                <td className={isYou ? "" : "invisible"}>
+                  <i className="fa fa-hand-o-right"></i>
+                </td>
+                <td><span className={"turn-indicator-" + myColor}></span></td>
+                <td>{this.data.me.emails[0].address}</td>
+              </tr>
+              <tr>
+                <td className={isYou ? "invisible" : ""}>
+                  <i className="fa fa-hand-o-right"></i>
+                </td>
+                <td><span className={"turn-indicator-" + yourColor}></span></td>
+                <td>{this.data.you.emails[0].address}</td>
+              </tr>
+            </table>
           </div>
         </div>
       )
