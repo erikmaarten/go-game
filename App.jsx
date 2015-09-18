@@ -56,10 +56,10 @@ App = React.createClass({
           <div>
             <GameInfo players={this.data.activeGame.players} 
               currentPlayer={this.data.activeGame.currentPlayer} />
-            <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
             <Board data={this.data.activeGame.board} playerColor={playerColor} 
               players={this.data.activeGame.players} 
               currentPlayer={this.data.activeGame.currentPlayer} />
+            <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
           </div>
           : ""}
         {isGameWaitingForPlayerJoin ? 
