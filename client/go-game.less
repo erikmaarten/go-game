@@ -9,6 +9,7 @@ body {
   display: inline-block;
   padding: 10px;
   margin: 10px;
+  border-radius: 2px;
   background-color: lighten(#ccc, 10);
   box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.6);
 }
@@ -18,8 +19,10 @@ body {
 }
 
 #grid-canvas {
+  border-radius: 5px;
   position: absolute;
   z-index: 0;
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.6);
 }
 
 #render-target {
@@ -50,6 +53,7 @@ body {
   height: @stone-width;
   border-radius: 50%;
   border: 1px solid black;
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.6);
 }
 .stone-black {
   .stone-mixin;
