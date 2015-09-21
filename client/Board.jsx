@@ -18,11 +18,6 @@ Board = React.createClass({
     return out;
   },
 
-  handleBoardClick(event) {
-    //console.log(event.target);
-    //console.log(event.currentTarget);
-  },
-
   render() {
     var board_rows = this.split(this.props.data, Game.getBoardWidth(this.props.data));
     var rows = board_rows.map((row, rowIndex) => {
@@ -40,7 +35,7 @@ Board = React.createClass({
     });
 
     return (
-      <div className="board" onClick={this.handleBoardClick} >{rows}</div>
+      <div className="board" >{rows}</div>
     );
   }
 });
