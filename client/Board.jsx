@@ -25,41 +25,22 @@ Board = React.createClass({
 
   render() {
     var board_rows = this.split(this.props.data, Game.getBoardWidth(this.props.data));
-    var rows = board_rows.map((row, index) => {
-      return <BoardRow data={row} rowIndex={index} key={index} 
-        playerColor={this.props.playerColor} players={this.props.players} 
-        gameStatus={this.props.gameStatus} currentPlayer={this.props.currentPlayer} />;
+    var rows = board_rows.map((row, rowIndex) => {
+      // For each row, split the row's intersection values into
+      // separate entries in an array
+      // Then map each of those intersections to an Intersection element
+      var raw_intersections = row.split("");
+      var outputRow = raw_intersections.map((type, colIndex) => {
+        return <Intersection playerColor={this.props.playerColor} 
+          players={this.props.players} type={type} key={rowIndex + " " + colIndex} 
+          position={[rowIndex, colIndex]} gameStatus={this.props.gameStatus} 
+          currentPlayer={this.props.currentPlayer} />;
+      });
+      return <div className="board-row" key={rowIndex} >{outputRow}</div>;
     });
-    /*
-    var rows = _.each(board_rows, function(element, index) {
-      return 
-    })*/
+
     return (
       <div className="board" onClick={this.handleBoardClick} >{rows}</div>
-    );
-  }
-});
-
-BoardRow = React.createClass({
-  propTypes: {
-    data: React.PropTypes.string.isRequired,
-    rowIndex: React.PropTypes.number.isRequired,
-    players: React.PropTypes.array.isRequired,
-    playerColor: React.PropTypes.string.isRequired,
-    currentPlayer: React.PropTypes.string.isRequired,
-    gameStatus: React.PropTypes.string.isRequired
-  },
-
-  render() {
-    var raw_intersections = this.props.data.split("");
-    var intersections = raw_intersections.map((type, index) => {
-      return <Intersection playerColor={this.props.playerColor} 
-        players={this.props.players} type={type} key={this.props.rowIndex + " " + index} 
-        position={[this.props.rowIndex, index]} gameStatus={this.props.gameStatus} 
-        currentPlayer={this.props.currentPlayer} />;
-    });
-    return (
-      <div className="board-row">{intersections}</div>
     );
   }
 });
