@@ -23,7 +23,7 @@ EndedGame = React.createClass({
     return (
       <div>
         {isResignedGame ? 
-          <h2>{whoResigned} resigned</h2>
+          <h2>{CapitalizeFirstLetter(whoResigned)} resigned</h2>
           :
           <EndedGameWinnerText finalScore={this.props.game.finalScore} />
         }
