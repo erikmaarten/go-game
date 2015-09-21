@@ -2,7 +2,10 @@ Flash = {};
 
 var timer;
 Flash.setNew = function(html) {
-  $('#flash-messages').html(html);
+  $('#flash-messages').html("");
+  Meteor.setTimeout(function() {
+    $('#flash-messages').html(html);
+  }, 200);
 
   if (timer) {
     Meteor.clearTimeout(timer);
