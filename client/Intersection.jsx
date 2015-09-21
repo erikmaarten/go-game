@@ -10,6 +10,7 @@ Intersection = React.createClass({
 
   handleClick() {
     if (this.props.currentPlayer !== Meteor.userId()) {
+      Flash.warning("It's not your turn yet.");
       return;
     } else if (this.props.type === NO_STONE) {
       var pos = this.props.position;
@@ -22,6 +23,9 @@ Intersection = React.createClass({
         })
         .value()[0];
       Game.placeStone(pos);
+    } else {
+      // It's your turn, but the intersection is already occupied
+      Flash.error("That intersection is already taken. Try another one!");
     }
   },
 
