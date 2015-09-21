@@ -5,6 +5,25 @@ body {
   background: url("/bg.png");
 }
 
+#flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#left-sidebar {
+  padding: 5px 10px;
+  margin: 0px 10px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 300px;
+  flex: 1 0 auto;
+}
+
+#main {
+  margin: 0px 10px;
+  flex: 1 0 300px;
+}
+
 #game-info {
   display: inline-block;
   padding: 10px;

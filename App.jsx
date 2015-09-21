@@ -54,7 +54,6 @@ App = React.createClass({
 
     return (
       <div className="container">
-        <AppHeader />
         <MetaActions game={game} />
         {gameInProgress ? 
           <div>
@@ -72,15 +71,5 @@ App = React.createClass({
         {showOldGame ? <EndedGame game={this.data.endedGame} gameStatus={gameStatus} /> : ""}
       </div>
     );
-  }
-});
-
-AppHeader = React.createClass({
-  render() {
-    return (
-        <header>
-          <h1>Go</h1>
-        </header>
-      );
   }
 });
