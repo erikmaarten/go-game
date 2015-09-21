@@ -5,11 +5,14 @@ Intersection = React.createClass({
     position: React.PropTypes.array.isRequired,
     players: React.PropTypes.array.isRequired,
     playerColor: React.PropTypes.string.isRequired,
-    currentPlayer: React.PropTypes.string.isRequired
+    currentPlayer: React.PropTypes.string.isRequired,
+    gameStatus: React.PropTypes.string.isRequired
   },
 
   handleClick() {
-    if (this.props.currentPlayer !== Meteor.userId()) {
+    if (this.props.gameStatus === "ended") {
+      Flash.info("The game has already ended. Press 'New game' to play again");
+    } else if (this.props.currentPlayer !== Meteor.userId()) {
       Flash.warning("It's not your turn yet.");
       return;
     } else if (this.props.type === NO_STONE) {

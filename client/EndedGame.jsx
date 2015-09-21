@@ -1,7 +1,8 @@
 EndedGame = React.createClass({
   propTypes: {
     // We can use propTypes to indicate it is required
-    game: React.PropTypes.object.isRequired
+    game: React.PropTypes.object.isRequired,
+    gameStatus: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -27,7 +28,8 @@ EndedGame = React.createClass({
           :
           <EndedGameWinnerText finalScore={this.props.game.finalScore} />
         }
-        <Board data={this.props.game.board} players={this.props.game.players} />
+        <Board data={this.props.game.board} gameStatus={this.props.gameStatus} 
+        players={this.props.game.players} />
       </div>
     );
   }

@@ -47,6 +47,10 @@ App = React.createClass({
     var showOldGame = !activeGame && this.data.endedGame ? true : false;
     var gameInProgress = activeGame && activeGame.players.length === 2;
     var isGameWaitingForPlayerJoin = activeGame && activeGame.players.length === 1;
+    var gameStatus;
+    if (activeGame) gameStatus = "active";
+    else if (this.data.endedGame) gameStatus = "ended";
+    else gameStatus = "none";
 
     return (
       <div className="container">
@@ -57,7 +61,7 @@ App = React.createClass({
             <GameInfo players={this.data.activeGame.players} 
               currentPlayer={this.data.activeGame.currentPlayer} />
             <Board data={this.data.activeGame.board} playerColor={playerColor} 
-              players={this.data.activeGame.players} 
+              gameStatus={gameStatus} players={this.data.activeGame.players} 
               currentPlayer={this.data.activeGame.currentPlayer} />
             <GameActions currentPlayer={this.data.activeGame.currentPlayer} />
           </div>
@@ -65,7 +69,7 @@ App = React.createClass({
         {isGameWaitingForPlayerJoin ? 
           <GameWaitingForPlayer game={this.data.activeGame} />
           : ""}
-        {showOldGame ? <EndedGame game={this.data.endedGame} /> : ""}
+        {showOldGame ? <EndedGame game={this.data.endedGame} gameStatus={gameStatus} /> : ""}
       </div>
     );
   }

@@ -4,7 +4,8 @@ Board = React.createClass({
     data: React.PropTypes.string.isRequired,
     playerColor: React.PropTypes.string.isRequired,
     players: React.PropTypes.array.isRequired,
-    currentPlayer: React.PropTypes.string.isRequired
+    currentPlayer: React.PropTypes.string.isRequired,
+    gameStatus: React.PropTypes.string.isRequired
   },
 
   // Split a in n equal parts
@@ -27,7 +28,7 @@ Board = React.createClass({
     var rows = board_rows.map((row, index) => {
       return <BoardRow data={row} rowIndex={index} key={index} 
         playerColor={this.props.playerColor} players={this.props.players} 
-        currentPlayer={this.props.currentPlayer} />;
+        gameStatus={this.props.gameStatus} currentPlayer={this.props.currentPlayer} />;
     });
     /*
     var rows = _.each(board_rows, function(element, index) {
@@ -45,7 +46,8 @@ BoardRow = React.createClass({
     rowIndex: React.PropTypes.number.isRequired,
     players: React.PropTypes.array.isRequired,
     playerColor: React.PropTypes.string.isRequired,
-    currentPlayer: React.PropTypes.string.isRequired
+    currentPlayer: React.PropTypes.string.isRequired,
+    gameStatus: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -53,7 +55,8 @@ BoardRow = React.createClass({
     var intersections = raw_intersections.map((type, index) => {
       return <Intersection playerColor={this.props.playerColor} 
         players={this.props.players} type={type} key={this.props.rowIndex + " " + index} 
-        position={[this.props.rowIndex, index]} currentPlayer={this.props.currentPlayer} />;
+        position={[this.props.rowIndex, index]} gameStatus={this.props.gameStatus} 
+        currentPlayer={this.props.currentPlayer} />;
     });
     return (
       <div className="board-row">{intersections}</div>
