@@ -142,12 +142,6 @@ Game.newBoard = function(width) {
   return board;
 }
 
-Game.placeStone = function(position) {
-  Meteor.call("placeStone", position, function(error, result) {
-    if (error) {console.log("error in insertStone: " + error);}
-  });
-}
-
 Game.capture = function(board, playedPosition) {
   check(board, String);
   check(playedPosition, [Number]);
