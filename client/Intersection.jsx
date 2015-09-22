@@ -25,7 +25,21 @@ Intersection = React.createClass({
           return player.color;
         })
         .value()[0];
-      Game.placeStone(pos);
+
+      // Attempt placing the stone on the empty intersection clicked
+      // There are a few cases in which it is illegal to place a stone
+      // on a particular intersection, these cases are checked for here
+      Meteor.call("placeStone", pos, function(error, resultCode) {
+        if (error) {
+          console.log("error calling placeStone: " + error);
+        } else if (resultCode === STATUS.suicide_illegal) {
+          Flash.error("Suicide: You cannot make a move that results in your own stones being captured");
+        } else if (resultCode === STATUS.superko_violation) {
+          Flash.error("That move would violate the super kō rule");
+        } else {
+          console.log("resultCode: " + resultCode);
+        }
+      });
     } else {
       // It's your turn, but the intersection is already occupied
       Flash.error("That intersection is already taken. Try another one!");
