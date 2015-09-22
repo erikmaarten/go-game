@@ -180,19 +180,19 @@ Game.capture = function(board, playedPosition) {
   adjacent.push(stringPos);
   var capturedPositions = _.chain(adjacent)
     .filter(function(position) {
-      // return only intersections that the opponent currently holds
-      return board[position] === playerType;
+      // return only intersections that are held by the current player
+      return cleanedBoard[position] === playerType;
     })
     .filter(function(position) {
       // return only positions where stones have zero liberties
       var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
-      return Game.numberOfLiberties(board, matrixPos) === 0;
+      return Game.numberOfLiberties(cleanedBoard, matrixPos) === 0;
     })
     .map(function(position) {
       // return the groups that the positions belong to
       var matrixPos = Game.linearPosToMatrixPos(position, boardWidth);
       //console.log("Game.getGroup: " + JSON.stringify(Game.getGroup(board, matrixPos)));
-      return Game.getGroup(board, matrixPos);
+      return Game.getGroup(cleanedBoard, matrixPos);
     })
     .flatten()
     .uniq()
