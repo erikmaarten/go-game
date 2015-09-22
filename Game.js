@@ -4,6 +4,30 @@ Game.debugPrintCurrent = function() {
   console.log(Games.findOne({status: "active"}).board);
 }
 
+Game.recreateBoardPositions = function(history, boardWidth) {
+  check(history, [{
+    type: String,
+    color: Match.Optional(String),
+    position: Match.Optional(Number)
+  }]);
+
+  var board = Game.newBoard(boardWidth);
+  var boardPositions = [];
+  _.each(history, function(move) {
+    if (move.type === "placeStone") {
+      var positionInString = move.position;
+      var stone = Game.stoneColorToCharacter(move.color);
+      board = board.slice(0, positionInString) + 
+        stone + board.slice(positionInString + 1);
+      board = Game.capture(board, 
+        Game.linearPosToMatrixPos(positionInString, boardWidth));
+      boardPositions.push(board);
+    }
+  });
+
+  return boardPositions;
+}
+
 Game.getEmptyGroups = function(board) {
   var intersections = [];
   var emptyGroups = [];

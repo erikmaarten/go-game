@@ -121,4 +121,23 @@ describe('Go logic', function() {
     });
 
   });
+
+  describe('Recreate board positions', function() {
+    it('should correctly return three boards when given a three-move history', function() {
+      var board1 = "001000000000000000000000000000000000000000000000000000000000000000000000000000000";
+      var board2 = "021000000000000000000000000000000000000000000000000000000000000000000000000000000";
+      var board3 = "021100000000000000000000000000000000000000000000000000000000000000000000000000000";
+      var history = [
+        {type: "placeStone", color: "black", position: 2},
+        {type: "placeStone", color: "white", position: 1},
+        {type: "placeStone", color: "black", position: 3},
+      ];
+      var boards = Game.recreateBoardPositions(history, Game.getBoardWidth(board1));
+      expect(boards.indexOf(board1)).toEqual(0);
+      expect(boards.indexOf(board2)).toEqual(1);
+      expect(boards.indexOf(board3)).toEqual(2);
+    });
+
+
+  });
 });
