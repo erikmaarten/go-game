@@ -9,9 +9,9 @@ autopublish
 insecure
 react
 underscore
-less
 accounts-ui
 accounts-password
 sanjo:jasmine
 velocity:html-reporter
 fortawesome:fontawesome
+flemay:less-autoprefixer
