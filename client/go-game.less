@@ -1,6 +1,30 @@
 @intersection-width: 30px;
 @stone-width: 20px;
 
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: normal;
+  font-style: normal;
+  src: url('fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: normal;
+  font-style: italic;
+  src: url('fonts/OpenSans-Italic.ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: bold;
+  font-style: normal;
+  src: url('fonts/OpenSans-Bold.ttf');
+}
+
+h1, h2, h3, p, td, span, button, li, a {
+  font-family: 'Open Sans';
+}
+
 body {
   background: url("/bg.png");
 }
@@ -18,6 +42,10 @@ body {
   max-width: 300px;
   flex: 1 1 auto;
 }
+
+#left-sidebar h1 {margin-bottom: 5px; margin-top: 10px;}
+#left-sidebar h2 {margin-bottom: 5px; margin-top: 10px;}
+#left-sidebar p {margin-bottom: 10px; margin-top: 10px;}
 
 #main {
   margin: 0px 10px;
