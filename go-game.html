@@ -3,10 +3,12 @@
 </head>
 
 <body>
-  {{> loginButtons}}
   <div id="flash-messages"></div>
   <div id="flex-container">
-    <div id="left-sidebar"></div>
+    <div id="left-sidebar">
+      {{> loginButtons}}
+      <div id="left-sidebar-render-target"></div>
+    </div>
     <div id="main">
       <canvas id="grid-canvas"></canvas>
       <div id="render-target"></div>
