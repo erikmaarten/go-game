@@ -128,9 +128,8 @@ Game.capture = function(board, playedPosition) {
   check(board, String);
   check(playedPosition, [Number]);
   // Perform capture (done after a stone has been played)
-  // Note that suicide is not prohibited according to most rulesets
-  // However, the capture function does ensure validity. Instead,
-  // Game.validatePlay() does validation
+  // Note that suicide is prohibited according to most rulesets
+  // However, the capture function does ensure validity.
 
   // 1. Fetch all adjacent positions to the playedPosition
   // 2. For all of the opponent's stones in those positions, 
