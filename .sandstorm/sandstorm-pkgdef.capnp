@@ -49,7 +49,7 @@ const pkgdef :Spk.PackageDefinition = (
     searchPath = [
       ( sourcePath = "/home/vagrant/bundle" ),
       ( sourcePath = "/opt/meteor-spk/meteor-spk.deps" ),
-      ( sourcePath = "/opt/app/.sandstorm/" )
+      ( sourcePath = "/opt/app/.sandstorm" )
     ]
   ),
 
@@ -96,7 +96,7 @@ const pkgdef :Spk.PackageDefinition = (
 
 const actionNewGame9 :Spk.Manifest.Command = (
   # Here we define the command used to start up your server.
-  argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/new_game_9x9.sh"],
+  argv = ["/sandstorm-http-bridge", "8000", "--", "/new_game_9x9.sh"],
   environ = [
     # Note that this defines the *entire* environment seen by your app.
     (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
@@ -105,7 +105,7 @@ const actionNewGame9 :Spk.Manifest.Command = (
 
 const actionNewGame19 :Spk.Manifest.Command = (
   # Here we define the command used to start up your server.
-  argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/new_game_19x19.sh"],
+  argv = ["/sandstorm-http-bridge", "8000", "--", "/new_game_19x19.sh"],
   environ = [
     # Note that this defines the *entire* environment seen by your app.
     (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
@@ -114,7 +114,7 @@ const actionNewGame19 :Spk.Manifest.Command = (
 
 const actionContinue :Spk.Manifest.Command = (
   # Here we define the command used to start up your server.
-  argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/launcher.sh"],
+  argv = ["/sandstorm-http-bridge", "8000", "--", "/launcher.sh"],
   environ = [
     # Note that this defines the *entire* environment seen by your app.
     (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
