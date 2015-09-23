@@ -15,3 +15,4 @@ velocity:html-reporter
 fortawesome:fontawesome
 flemay:less-autoprefixer
 kenton:accounts-sandstorm
+jacksingleton:accounts-sandstorm-dev
