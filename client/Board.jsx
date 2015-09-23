@@ -3,7 +3,6 @@ Board = React.createClass({
     // We can use propTypes to indicate it is required
     data: React.PropTypes.string.isRequired,
     playerColor: React.PropTypes.string.isRequired,
-    players: React.PropTypes.array.isRequired,
     currentPlayer: React.PropTypes.string.isRequired,
     gameStatus: React.PropTypes.string.isRequired
   },
@@ -27,7 +26,7 @@ Board = React.createClass({
       var raw_intersections = row.split("");
       var outputRow = raw_intersections.map((type, colIndex) => {
         return <Intersection playerColor={this.props.playerColor} 
-          players={this.props.players} type={type} key={rowIndex + " " + colIndex} 
+          type={type} key={rowIndex + " " + colIndex} 
           position={[rowIndex, colIndex]} gameStatus={this.props.gameStatus} 
           currentPlayer={this.props.currentPlayer} />;
       });
