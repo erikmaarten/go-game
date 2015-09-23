@@ -27,36 +27,92 @@ const pkgdef :Spk.PackageDefinition = (
 
     actions = [
       # Define your "new document" handlers here.
-      ( title = (defaultText = "New Game"),
-        command = .myCommand
+      ( title = (defaultText = "New Game (9x9)"),
+        command = .actionNewGame9
+        # The command to run when starting for the first time. (".myCommand"
+        # is just a constant defined at the bottom of the file.)
+      ),
+      ( title = (defaultText = "New Game (19x19)"),
+        command = .actionNewGame19
         # The command to run when starting for the first time. (".myCommand"
         # is just a constant defined at the bottom of the file.)
       )
     ],
 
-    continueCommand = .myCommand
+    continueCommand = .actionContinue
     # This is the command called to start your app back up after it has been
-    # shut down for inactivity. Here we're using the same command as for
-    # starting a new instance, but you could use different commands for each
-    # case.
+    # shut down for inactivity.
   ),
 
   sourceMap = (
     # The following directories will be copied into your package.
     searchPath = [
       ( sourcePath = "/home/vagrant/bundle" ),
-      ( sourcePath = "/opt/meteor-spk/meteor-spk.deps" )
+      ( sourcePath = "/opt/meteor-spk/meteor-spk.deps" ),
+      ( sourcePath = "/opt/app/.sandstorm/" )
     ]
   ),
 
-  alwaysInclude = [ "." ]
+  alwaysInclude = [ "." ],
   # This says that we always want to include all files from the source map.
   # (An alternative is to automatically detect dependencies by watching what
   # the app opens while running in dev mode. To see what that looks like,
   # run `spk init` without the -A option.)
+
+  bridgeConfig = (
+    viewInfo = (
+      permissions = [(
+          name = "black_player",
+          title = (defaultText = "Black player"),
+          description = (defaultText = "grants permission to play as black")
+        ),(
+          name = "white_player",
+          title = (defaultText = "White player"),
+          description = (defaultText = "grants permission to play as white")
+        ),(
+          name = "viewer",
+          title = (defaultText = "Viewer"),
+          description = (defaultText = "grants permission to view the game")
+        )
+      ],
+      roles = [(
+          title = (defaultText = "Black player"),
+          permissions = [true, false, false],
+          verbPhrase = (defaultText = "plays as black"),
+          default = true
+        ),(
+          title = (defaultText = "White player"),
+          permissions = [false, true, false],
+          verbPhrase = (defaultText = "plays as white")
+        ),(
+          title = (defaultText = "Viewer"),
+          permissions = [false, false, true],
+          verbPhrase = (defaultText = "can view the game")
+        )
+      ]
+    )
+  )
 );
 
-const myCommand :Spk.Manifest.Command = (
+const actionNewGame9 :Spk.Manifest.Command = (
+  # Here we define the command used to start up your server.
+  argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/new_game_9x9.sh"],
+  environ = [
+    # Note that this defines the *entire* environment seen by your app.
+    (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
+  ]
+);
+
+const actionNewGame19 :Spk.Manifest.Command = (
+  # Here we define the command used to start up your server.
+  argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/new_game_19x19.sh"],
+  environ = [
+    # Note that this defines the *entire* environment seen by your app.
+    (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
+  ]
+);
+
+const actionContinue :Spk.Manifest.Command = (
   # Here we define the command used to start up your server.
   argv = ["/sandstorm-http-bridge", "8000", "--", "/opt/app/.sandstorm/launcher.sh"],
   environ = [
@@ -64,3 +120,5 @@ const myCommand :Spk.Manifest.Command = (
     (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
   ]
 );
+
+
