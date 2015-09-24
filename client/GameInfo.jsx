@@ -5,7 +5,6 @@ GameInfo = React.createClass({
 
   render() {
     return (
-      <div>
         <div id="game-info">
           <table>
             <tr>
@@ -22,7 +21,6 @@ GameInfo = React.createClass({
             </tr>
           </table>
         </div>
-      </div>
     );
   }
 });

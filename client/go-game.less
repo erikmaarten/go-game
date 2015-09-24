@@ -43,6 +43,13 @@ button {
   flex-direction: row;
 }
 
+#main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 #left-sidebar {
   padding: 5px 10px;
   margin: 0px 10px;
@@ -57,6 +64,9 @@ button {
 #left-sidebar p {margin-bottom: 10px; margin-top: 10px;}
 
 #main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0px 10px;
   flex: 2 0 auto;
 }
@@ -65,14 +75,16 @@ button {
   display: inline-block;
   padding: 10px;
   margin: 10px;
-  border-radius: 5px;
-  background-color: lighten(#ccc, 10);
-  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.6);
 }
 
-#game-info p {
-  margin: 0px;
-}
+#game-info p {margin: 0px;}
+
+#game-info i.fa {vertical-align: top;}
+
+#end-game-text h2 {font-family: "Open Sans"; margin: 7px 0px;}
+#end-game-text table {display: inline-block;}
+#end-game-text table td {padding: 1px 10px;}
+#end-game-text table .score {font-weight: bold;}
 
 #flash-messages {
   position: fixed;
@@ -120,8 +132,8 @@ button {
 
 .turn-indicator-mixin {
   display: inline-block;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 1px solid rgba(0,0,0,0.5);
 }
@@ -155,8 +167,10 @@ td.invisible {
   z-index: 1;
 }
 
+.board {
+  display: inline-block;
+}
 .board-row {
-  display: block;
   height: 30px;
 }
 

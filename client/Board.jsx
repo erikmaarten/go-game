@@ -1,8 +1,6 @@
 Board = React.createClass({
   propTypes: {
-    // We can use propTypes to indicate it is required
     data: React.PropTypes.string.isRequired,
-    usertype: React.PropTypes.string.isRequired,
     currentPlayer: React.PropTypes.string.isRequired,
     playerColor: React.PropTypes.string.isRequired,
     gameStatus: React.PropTypes.string.isRequired
