@@ -27,7 +27,7 @@ Intersection = React.createClass({
         } else if (resultCode === STATUS.not_your_turn) {
           Flash.warning("It's not your turn yet.");
         } else {
-          console.log("resultCode: " + resultCode);
+          //console.log("resultCode: " + resultCode);
         }
       });
     } else {
