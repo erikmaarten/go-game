@@ -26,6 +26,7 @@ GridCanvas.positionAndRender = function() {
   var board = Session.get("board");
   var unitsWide = Game.getBoardWidth(board);
 
+  $(canvas).removeClass("hidden");
   canvas.style.top = top + "px";
   canvas.style.left = left + "px";
   GridCanvas.renderGrid("grid-canvas", unitsWide, unitsWide*width, width);
