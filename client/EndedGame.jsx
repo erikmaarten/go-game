@@ -11,14 +11,7 @@ EndedGame = React.createClass({
     var players = this.props.game.players;
     var whoResigned;
     if (isResignedGame) {
-      whoResigned = _.chain(players)
-        .filter(function(player) {
-          return player.userId === history[history.length-1].player;
-        })
-        .map(function(player) {
-          return player.color;
-        })
-        .value()[0];
+      whoResigned = history[history.length-1].player;
     }
 
     return (

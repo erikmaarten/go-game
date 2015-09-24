@@ -1,6 +1,7 @@
 GameActions = React.createClass({
   propTypes: {
-    currentPlayer: React.PropTypes.string.isRequired
+    currentPlayer: React.PropTypes.string.isRequired,
+    playerColor: React.PropTypes.string.isRequired
   },
 
   handlePass(event) {
@@ -20,7 +21,7 @@ GameActions = React.createClass({
   },
 
   render() {
-    var isCurrentPlayer = this.props.currentPlayer === Meteor.userId();
+    var isCurrentPlayer = this.props.currentPlayer === this.props.playerColor;
     return (
       <div id="game-actions">
         <button type="button" onClick={this.handlePass} disabled={isCurrentPlayer ? false : true} >

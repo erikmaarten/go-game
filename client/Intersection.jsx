@@ -11,9 +11,6 @@ Intersection = React.createClass({
   handleClick() {
     if (this.props.gameStatus === "ended") {
       Flash.info("The game has already ended. Press 'New game' to play again");
-    } else if (this.props.currentPlayer !== Meteor.userId()) {
-      Flash.warning("It's not your turn yet.");
-      return;
     } else if (this.props.type === NO_STONE) {
       var pos = this.props.position;
 
@@ -27,6 +24,8 @@ Intersection = React.createClass({
           Flash.error("Suicide: You cannot make a move that results in your own stones being captured");
         } else if (resultCode === STATUS.superko_violation) {
           Flash.error("That move would violate the super kō rule");
+        } else if (resultCode === STATUS.not_your_turn) {
+          Flash.warning("It's not your turn yet.");
         } else {
           console.log("resultCode: " + resultCode);
         }
@@ -70,12 +69,13 @@ Intersection = React.createClass({
       stoneClass = "no-stone";
     }
 
+    var isPlayer = this.props.playerColor === "white" || 
+      this.props.playerColor === "black";
     var positionKey = this.props.position[0] + ", " + this.props.position[1];
     return (
-      <span className={classes} key={positionKey} onClick={this.handleClick} 
-         >
+      <span className={classes} key={positionKey} 
+        onClick={isPlayer ? this.handleClick : ""} >
         <span className={stoneClass} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} >
-          {stoneClass === "no-stone" ? "" : ""}
         </span>
       </span>
     );
