@@ -18,10 +18,17 @@ GridCanvas.positionAndRender = function() {
   if (!boardExists) {
     return false;
   }
+
+  // Get the bounding rectangle for the first intersection of the board
+  // in order to see at which coordinates the canvas should be drawn
   var firstBoardElement = $('.intersection')[0].getBoundingClientRect();
-  var top = firstBoardElement.top;
   var width = firstBoardElement.width;
-  var left = firstBoardElement.left;
+  // Take window scroll values into account
+  // since top and left is relative to the viewport, not absolute
+  // window.pageYOffset / pageXOffset has better browser compatibility
+  // than window.scrollY / scrollX
+  var top = firstBoardElement.top + window.pageYOffset;
+  var left = firstBoardElement.left + window.pageXOffset;
   var canvas = document.getElementById("grid-canvas");
   var board = Session.get("board");
   var unitsWide = Game.getBoardWidth(board);
