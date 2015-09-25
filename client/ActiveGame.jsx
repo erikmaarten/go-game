@@ -23,10 +23,10 @@ ActiveGame = React.createClass({
             gameStatus={this.props.game.status} 
             playerColor={this.props.playerColor}
             currentPlayer={this.props.game.currentPlayer} />
-          </div>
         {this.props.isPlayer ? <GameActions playerColor={this.props.playerColor} 
           currentPlayer={this.props.game.currentPlayer} />
           : ""}
+        </div>
       </div>
 
     );
