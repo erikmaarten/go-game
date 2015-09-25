@@ -39,9 +39,35 @@ const pkgdef :Spk.PackageDefinition = (
       )
     ],
 
-    continueCommand = .actionContinue
+    continueCommand = .actionContinue,
     # This is the command called to start your app back up after it has been
     # shut down for inactivity.
+
+    metadata = (
+      icons = (
+        appGrid = (png = embed "app-graphics/appGrid_128.png"),
+        grain = (png = embed "app-graphics/grain_24.png"),
+        market = (png = embed "app-graphics/market_150.png"),
+        marketBig = (png = embed "app-graphics/marketBig_300.png"),
+      ),
+
+      website = "https://github.com/erikmaarten/go-game",
+      codeUrl = "https://github.com/erikmaarten/go-game",
+      license = (openSource = agpl3),
+      categories = [games],
+
+      author = (
+        contactEmail = "e.andersson@gmail.com",
+      ),
+
+      shortDescription = (defaultText = "The Go board game"),
+      description = (defaultText = "Go is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
+
+      screenshots = [
+        (width = 707, heigh = 522, png = embed "screen.png")
+      ],
+
+    ),
   ),
 
   sourceMap = (
