@@ -56,7 +56,7 @@ const pkgdef :Spk.PackageDefinition = (
       license = (openSource = agpl3),
       categories = [games],
 
-      author = (
+      author = ( 
         contactEmail = "e.andersson@gmail.com",
       ),
 
