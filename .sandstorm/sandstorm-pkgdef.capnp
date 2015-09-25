@@ -45,10 +45,10 @@ const pkgdef :Spk.PackageDefinition = (
 
     metadata = (
       icons = (
-        appGrid = (png = embed "app-graphics/appGrid_128.png"),
-        grain = (png = embed "app-graphics/grain_24.png"),
-        market = (png = embed "app-graphics/market_150.png"),
-        marketBig = (png = embed "app-graphics/marketBig_300.png"),
+        appGrid = (png = (dpi1x = embed "app-graphics/appGrid_128.png")),
+        grain = (png = (dpi1x = embed "app-graphics/grain_24.png")),
+        market = (png = (dpi1x = embed "app-graphics/market_150.png")),
+        marketBig = (png = (dpi1x = embed "app-graphics/marketBig_300.png")),
       ),
 
       website = "https://github.com/erikmaarten/go-game",
@@ -64,7 +64,7 @@ const pkgdef :Spk.PackageDefinition = (
       description = (defaultText = "Go is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
 
       screenshots = [
-        (width = 707, heigh = 522, png = embed "screen.png")
+        (width = 707, height = 522, png = embed "app-graphics/screen_707x522.png")
       ],
 
     ),
@@ -73,8 +73,9 @@ const pkgdef :Spk.PackageDefinition = (
   sourceMap = (
     # The following directories will be copied into your package.
     searchPath = [
+      ( sourcePath = "../" ),
       ( sourcePath = "/home/vagrant/bundle" ),
-      ( sourcePath = "/opt/meteor-spk/meteor-spk.deps" )
+      ( sourcePath = "/opt/meteor-spk/meteor-spk.deps" ),
     ]
   ),
 
