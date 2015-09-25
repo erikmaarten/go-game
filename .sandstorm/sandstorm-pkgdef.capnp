@@ -58,7 +58,10 @@ const pkgdef :Spk.PackageDefinition = (
 
       author = ( 
         contactEmail = "e.andersson@gmail.com",
+        pgpSignature = embed "pgpSignature"
       ),
+
+      pgpKeyring = embed "pgp-keyring",
 
       shortDescription = (defaultText = "The Go board game"),
       description = (defaultText = "Go is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
