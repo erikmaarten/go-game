@@ -4,7 +4,7 @@ LeftSidebar = React.createClass({
     return (
       <div>
         <h1>Go</h1>
-        <p><i>Go is an old board game originating from ancient China. It is played by two players
+        <p><i>Go is a board game originating from ancient China. It is played by two players
         taking turns to place white and black stones on the intersections of the board. The 
         goal of the game is to surround more territory than the other player.
         </i></p>
