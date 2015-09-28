@@ -63,8 +63,8 @@ const pkgdef :Spk.PackageDefinition = (
 
       pgpKeyring = embed "pgp-keyring",
 
-      shortDescription = (defaultText = "The Go board game"),
-      description = (defaultText = "Go is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
+      shortDescription = (defaultText = "Board game"),
+      description = (defaultText = "Go (or Wéiqí) is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
 
       screenshots = [
         (width = 707, height = 522, png = embed "app-graphics/screen_707x522.png")
