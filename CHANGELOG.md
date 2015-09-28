@@ -1,5 +1,3 @@
-# Changelog
-
-## v0.2
-- [Improvement] Added indicator showing the latest move
-- [Bugfix] Links now opening in new tab
+# 0.2
+* NEW: Added indicator showing the latest move
+* Fix: Links now opening in new tab
