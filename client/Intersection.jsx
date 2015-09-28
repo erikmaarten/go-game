@@ -5,7 +5,8 @@ Intersection = React.createClass({
     position: React.PropTypes.array.isRequired,
     playerColor: React.PropTypes.string.isRequired,
     currentPlayer: React.PropTypes.string.isRequired,
-    gameStatus: React.PropTypes.string.isRequired
+    gameStatus: React.PropTypes.string.isRequired,
+    isPreviousMove: React.PropTypes.bool.isRequired
   },
 
   handleClick() {
@@ -72,10 +73,14 @@ Intersection = React.createClass({
     var isPlayer = this.props.playerColor === "white" || 
       this.props.playerColor === "black";
     var positionKey = this.props.position[0] + ", " + this.props.position[1];
+    var isPreviousMove = this.props.isPreviousMove ? 
+      "previous-move" : "";
     return (
       <span className={classes} key={positionKey} 
         onClick={isPlayer ? this.handleClick : ""} >
         <span className={stoneClass} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} >
+          <span className={isPreviousMove} >
+          </span>
         </span>
       </span>
     );

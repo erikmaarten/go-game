@@ -15,14 +15,14 @@ LeftSidebar = React.createClass({
           through other unoccupied, adjacent intersections.</p>
         <ul>
           <li>Two consecutive passes end the game</li>
-          <li><a href="https://en.wikipedia.org/wiki/Rules_of_go#Repetition">Positional super kō
+          <li><a target="_blank" href="https://en.wikipedia.org/wiki/Rules_of_go#Repetition">Positional super kō
             </a>: a move that would result in a board position 
             that has previously occurred is illegal</li>
           <li>No komi</li>
-          <li><a href="https://en.wikipedia.org/wiki/Rules_of_go#Suicide">
+          <li><a target="_blank" href="https://en.wikipedia.org/wiki/Rules_of_go#Suicide">
             Suicide</a> not allowed</li>
         </ul>
-        <a href="https://en.wikipedia.org/wiki/Rules_of_go">Detailed rules (Wikipedia)</a>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Rules_of_go">Detailed rules (Wikipedia)</a>
       </div>
       );
   }

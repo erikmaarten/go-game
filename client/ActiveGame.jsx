@@ -14,6 +14,12 @@ ActiveGame = React.createClass({
     } else {
       roleDescription = "Viewing game";
     }
+
+    var game = this.props.game;
+    var previousMove;
+    if (game.history.length > 0) {
+      previousMove = game.history[game.history.length-1];
+    }
     return (
       <div id="main-container">
         <GameInfo currentPlayer={this.props.game.currentPlayer} />
@@ -22,7 +28,8 @@ ActiveGame = React.createClass({
           <Board data={this.props.game.board}
             gameStatus={this.props.game.status} 
             playerColor={this.props.playerColor}
-            currentPlayer={this.props.game.currentPlayer} />
+            currentPlayer={this.props.game.currentPlayer} 
+            previousMove={previousMove} />
         {this.props.isPlayer ? <GameActions playerColor={this.props.playerColor} 
           currentPlayer={this.props.game.currentPlayer} />
           : ""}

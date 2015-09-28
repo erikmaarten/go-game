@@ -1,5 +1,6 @@
 @intersection-width: 30px;
 @stone-width: 20px;
+@prev-indicator-width: @stone-width / 3;
 
 @font-face {
   font-family: 'Open Sans';
@@ -212,6 +213,7 @@ td.invisible {
 .stone-mixin {
   box-sizing: border-box;
   display: inline-block;
+  padding: (@stone-width - @prev-indicator-width - 2) / 2;
   vertical-align: top;
   width: @stone-width;
   height: @stone-width;
@@ -236,6 +238,24 @@ td.invisible {
   width: @stone-width;
   height: @stone-width;
   border-radius: 50%;
+}
+
+.previous-move-mixin {
+  opacity: 0.8;
+  box-sizing: border-box;
+  display: block;
+  width: @prev-indicator-width;
+  height: @prev-indicator-width;
+  border-radius: 50%;
+}
+
+.stone-black .previous-move {
+  .previous-move-mixin;
+  background-color: white;
+}
+.stone-white .previous-move {
+  .previous-move-mixin;
+  background-color: black;
 }
 
 .hover-empty-mixin {
