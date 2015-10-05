@@ -1,3 +1,4 @@
+/*globals ActiveGame:true, React, GameInfo, GameActions, Board */
 ActiveGame = React.createClass({
   propTypes: {
     game: React.PropTypes.object.isRequired,

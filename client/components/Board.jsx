@@ -1,3 +1,4 @@
+/*globals Board:true, React, Game, Intersection */
 Board = React.createClass({
   propTypes: {
     data: React.PropTypes.string.isRequired,

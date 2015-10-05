@@ -1,4 +1,6 @@
-// Task component - represents a single todo item
+/*globals Intersection:true, React, Flash, 
+NO_STONE, BLACK_STONE, WHITE_STONE, 
+Meteor, console, STATUS, $ */
 Intersection = React.createClass({
   propTypes: {
     type: React.PropTypes.string.isRequired,
