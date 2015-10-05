@@ -1,0 +1,8 @@
+{
+  "unused": true,
+  "undef": true,
+  "esnext": true,
+  "predef": ["Meteor", "STATUS", "React", "Games", "ReactMeteorData",
+    "GridCanvas", "Session", "Permissions"]
+
+}
