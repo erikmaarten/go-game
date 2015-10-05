@@ -1,3 +1,4 @@
+/*globals GameActions:true, window */
 GameActions = React.createClass({
   propTypes: {
     currentPlayer: React.PropTypes.string.isRequired,
@@ -6,7 +7,7 @@ GameActions = React.createClass({
 
   handlePass(event) {
     event.preventDefault();
-    Meteor.call("pass", function(error, result) {
+    Meteor.call("pass", function(error) {
       if (error) {console.log("error calling pass: " + error);}
     });
   },
@@ -14,7 +15,7 @@ GameActions = React.createClass({
   handleResign(event) {
     event.preventDefault();
     if (window.confirm("Do you really want to resign?")) {
-      Meteor.call("resign", function(error, result) {
+      Meteor.call("resign", function(error) {
         if (error) {console.log("error calling method resign: " + error);}
       });
     }
@@ -27,11 +28,11 @@ GameActions = React.createClass({
         <button type="button" onClick={this.handlePass} disabled={isCurrentPlayer ? false : true} >
           Pass
         </button>
-        <button type="button" onClick={this.handleResign} 
+        <button type="button" onClick={this.handleResign}
           disabled={isCurrentPlayer ? false : true} >
           Resign
         </button>
       </div>
-    )
+    );
   }
 });

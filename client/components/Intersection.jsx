@@ -1,4 +1,4 @@
-/*globals Intersection:true, React, Flash, 
+/*globals Intersection:true, React, Flash,
 NO_STONE, BLACK_STONE, WHITE_STONE, 
 Meteor, console, STATUS, $ */
 Intersection = React.createClass({
@@ -72,13 +72,13 @@ Intersection = React.createClass({
       stoneClass = "no-stone";
     }
 
-    var isPlayer = this.props.playerColor === "white" || 
+    var isPlayer = this.props.playerColor === "white" ||
       this.props.playerColor === "black";
     var positionKey = this.props.position[0] + ", " + this.props.position[1];
-    var isPreviousMove = this.props.isPreviousMove ? 
+    var isPreviousMove = this.props.isPreviousMove ?
       "previous-move" : "";
     return (
-      <span className={classes} key={positionKey} 
+      <span className={classes} key={positionKey}
         onClick={isPlayer ? this.handleClick : ""} >
         <span className={stoneClass} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} >
           <span className={isPreviousMove} >

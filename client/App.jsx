@@ -1,4 +1,4 @@
-// App component - represents the whole app
+/*globals App:true, headers, ActiveGame, EndedGame, OwnerChooseRole */
 App = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -23,7 +23,7 @@ App = React.createClass({
 
   render() {
     if (this.data.loading) {
-      return <p>Loading...</p>;
+      return (<p>Loading...</p>);
     }
 
     var gameStatus = this.data.game.status;
@@ -43,7 +43,7 @@ App = React.createClass({
           playerColor={playerColor} role={usertype}
           game={this.data.game} />
           : ""}
-        {gameStatus === "ended" ? <EndedGame game={this.data.game} 
+        {gameStatus === "ended" ? <EndedGame game={this.data.game}
           gameStatus={gameStatus} /> : ""}
       </div>
     );

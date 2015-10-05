@@ -1,18 +1,19 @@
+/*global OwnerChooseRole:true */
 OwnerChooseRole = React.createClass({
-  clickBlack(event) {
-    Meteor.call("setOwnerRole", "black_player", function(error, result) {
+  clickBlack() {
+    Meteor.call("setOwnerRole", "black_player", function(error) {
       if (error) {console.log("error calling setOwnerRole: " + error);}
     });
   },
 
-  clickWhite(event) {
-    Meteor.call("setOwnerRole", "white_player", function(error, result) {
+  clickWhite() {
+    Meteor.call("setOwnerRole", "white_player", function(error) {
       if (error) {console.log("error calling setOwnerRole: " + error);}
     });
   },
 
-  clickViewer(event) {
-    Meteor.call("setOwnerRole", "viewer", function(error, result) {
+  clickViewer() {
+    Meteor.call("setOwnerRole", "viewer", function(error) {
       if (error) {console.log("error calling setOwnerRole: " + error);}
     });
   },

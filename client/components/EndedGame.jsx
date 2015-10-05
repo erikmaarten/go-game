@@ -1,3 +1,5 @@
+/*globals EndedGame:true, EndedGameWinnerText:true, Board,
+  CapitalizeFirstLetter */
 EndedGame = React.createClass({
   propTypes: {
     // We can use propTypes to indicate it is required
@@ -8,7 +10,6 @@ EndedGame = React.createClass({
   render() {
     var history = this.props.game.history;
     var isResignedGame = history && history[history.length-1].type === "resign";
-    var players = this.props.game.players;
     var whoResigned;
     if (isResignedGame) {
       whoResigned = history[history.length-1].player;
@@ -18,13 +19,13 @@ EndedGame = React.createClass({
       <div id="main-container">
         <div>
           <div id="end-game-text">
-          {isResignedGame ? 
+          {isResignedGame ?
             <h2><i>{CapitalizeFirstLetter(whoResigned)} resigned.</i></h2>
             :
             <EndedGameWinnerText finalScore={this.props.game.finalScore} />
           }
           </div>
-          <Board data={this.props.game.board} gameStatus={this.props.gameStatus} 
+          <Board data={this.props.game.board} gameStatus={this.props.gameStatus}
             players={this.props.game.players} />
         </div>
       </div>

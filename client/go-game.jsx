@@ -1,3 +1,4 @@
+/*globals window, document, LeftSidebar, App */
 if (Meteor.isClient) {
   // This code is executed on the client only
   Meteor.startup(function () {
@@ -11,4 +12,3 @@ if (Meteor.isClient) {
 
   });
 }
-

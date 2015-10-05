@@ -1,3 +1,4 @@
+/*global GameInfo:true */
 GameInfo = React.createClass({
   propTypes: {
     currentPlayer: React.PropTypes.string.isRequired

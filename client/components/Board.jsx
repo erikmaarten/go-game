@@ -33,9 +33,9 @@ Board = React.createClass({
       var outputRow = raw_intersections.map((type, colIndex) => {
         var currentPosition = Game.matrixPosToLinearPos(
           [rowIndex, colIndex], boardWidth);
-        return <Intersection playerColor={this.props.playerColor} 
-          type={type} key={rowIndex + " " + colIndex} 
-          position={[rowIndex, colIndex]} gameStatus={this.props.gameStatus} 
+        return <Intersection playerColor={this.props.playerColor}
+          type={type} key={rowIndex + " " + colIndex}
+          position={[rowIndex, colIndex]} gameStatus={this.props.gameStatus}
           isPreviousMove={previousMovePosition && currentPosition === previousMovePosition}
           currentPlayer={this.props.currentPlayer} />;
       });

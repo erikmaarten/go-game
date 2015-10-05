@@ -1,3 +1,4 @@
+/*global LeftSidebar:true */
 LeftSidebar = React.createClass({
 
   render() {
@@ -5,7 +6,7 @@ LeftSidebar = React.createClass({
       <div>
         <h1>Go</h1>
         <p><i>Go is a board game originating from ancient China. It is played by two players
-        taking turns to place white and black stones on the intersections of the board. The 
+        taking turns to place white and black stones on the intersections of the board. The
         goal of the game is to surround more territory than the other player.
         </i></p>
         <h2>Rules</h2>
@@ -16,7 +17,7 @@ LeftSidebar = React.createClass({
         <ul>
           <li>Two consecutive passes end the game</li>
           <li><a target="_blank" href="https://en.wikipedia.org/wiki/Rules_of_go#Repetition">Positional super kō
-            </a>: a move that would result in a board position 
+            </a>: a move that would result in a board position
             that has previously occurred is illegal</li>
           <li>No komi</li>
           <li><a target="_blank" href="https://en.wikipedia.org/wiki/Rules_of_go#Suicide">
