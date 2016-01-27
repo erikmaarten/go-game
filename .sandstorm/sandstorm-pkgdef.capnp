@@ -19,7 +19,7 @@ const pkgdef :Spk.PackageDefinition = (
 
     appTitle = (defaultText = "Go"),
 
-    appVersion = 1,  # Increment this for every release.
+    appVersion = 2,  # Increment this for every release.
 
     appMarketingVersion = (defaultText = "0.2.0"),
     # Human-readable representation of appVersion. Should match the way you
@@ -56,7 +56,7 @@ const pkgdef :Spk.PackageDefinition = (
       license = (openSource = agpl3),
       categories = [games],
 
-      author = ( 
+      author = (
         contactEmail = "e.andersson@gmail.com",
         pgpSignature = embed "pgpSignature"
       ),
@@ -64,7 +64,7 @@ const pkgdef :Spk.PackageDefinition = (
       pgpKeyring = embed "pgp-keyring",
 
       shortDescription = (defaultText = "Board game"),
-      description = (defaultText = "Go (or Wéiqí) is the traditional Chinese board game for two players. Easy to learn and play, difficult to master."),
+      description = (defaultText = "Go (or Wéiqí) is the traditional Chinese board game for two players. Easy to learn and play, difficult to master. This game does _not_ support human vs computer play. To invite an opponent, use Sandstorm's 'Share access' button."),
 
       screenshots = [
         (width = 707, height = 522, png = embed "app-graphics/screen_707x522.png")
@@ -150,5 +150,3 @@ const actionContinue :Spk.Manifest.Command = (
     (key = "PATH", value = "/usr/local/bin:/usr/bin:/bin")
   ]
 );
-
-
